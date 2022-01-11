@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-image-presets",
   "description": "Image Presets for Vite.js apps. Optimize, resize, and process images consistently and with ease.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "files": [
     "dist"
   ],
@@ -43,7 +43,7 @@
     "example:build": "npm -C example run build",
     "example:now": "npm -C example run now",
     "build": "tsup src/index.ts --dts --format cjs,esm --clean",
-    "release": "nr build && npm publish",
+    "release": "node scripts/release.cjs",
     "prepublishOnly": "npm run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
