@@ -1,0 +1,7 @@
+{
+  "name": "vite-plugin-image-presets-tests",
+  "private": true,
+  "devDependencies": {
+    "vite-plugin-image-presets": "workspace:*"
+  }
+}

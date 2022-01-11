@@ -1,0 +1,20 @@
+{
+  "name": "vite-plugin-image-presets-example",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env DEBUG=image-presets:* vite --open",
+    "build": "cross-env DEBUG=image-presets:* vite build --mode production",
+    "preview": "cross-env RAILS_ENV=production DEBUG=image-presets:* vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.1",
+    "cross-env": "^7.0.3",
+    "typescript": "^4.1.3",
+    "vite": "^2.7",
+    "vite-plugin-image-presets": "workspace:*",
+    "vue": "^3.2"
+  }
+}
