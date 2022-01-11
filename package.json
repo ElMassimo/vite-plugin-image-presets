@@ -27,10 +27,10 @@
   "bugs": "https://github.com/ElMassimo/vite-plugin-image-presets/issues",
   "keywords": [
     "plugin",
-    "hmr",
-    "rails",
-    "ruby",
-    "stimulus",
+    "image",
+    "sharp",
+    "image-processing",
+    "build",
     "vite",
     "vite-plugin",
     "vitejs"
@@ -45,6 +45,7 @@
     "build": "tsup src/index.ts --dts --format cjs,esm --clean",
     "release": "nr build && npm publish",
     "prepublishOnly": "npm run build",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
   },
   "dependencies": {
@@ -58,9 +59,15 @@
     "@types/debug": "^4.1",
     "@types/node": "^14.14",
     "@types/sharp": "^0.29.5",
+    "conventional-changelog-cli": "^2.2.2",
+    "cross-spawn": "^7.0.3",
+    "enquirer": "^2.3.6",
     "eslint": "^7.17.0",
     "happy-dom": "^2.25.1",
+    "minimist": "^1.2.5",
+    "picocolors": "^1.0.0",
     "rollup": "^2.59",
+    "semver": "^7.3.5",
     "tsup": "^5",
     "typescript": "^4.5",
     "vite": "^2.7.0",

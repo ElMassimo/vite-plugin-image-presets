@@ -13,11 +13,11 @@
 
 <br>
 
-This is an example using Stimulus and Vite.js, which demonstrates the use of
-`import.meta.globEager` and [`stimulus-vite-helpers`](https://github.com/ElMassimo/stimulus-vite-helpers) to register controllers.
+This is an example using `vite-plugin-image-presets`.
 
 ## Play 🎸
 
 - Run `pnpm install`
-- Run `pnpm dev` to start the Vite.js dev server
-- Try modifying the Stimulus controllers and see the changes happen without a full page reload.
+- Run `pnpm dev` to start the dev server and try on-demand image generation
+- Run `pnpm build` to build the app and test image generation and caching
+- Run `pnpm preview` to see the generated app

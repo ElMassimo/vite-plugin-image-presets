@@ -11,8 +11,7 @@ export * from './types'
 export * from './presets'
 export { formatFor } from './utils'
 
-// Public: Vite Plugin to provide HMR for Stimulus controllers, allowing to
-// re-register them without reloading the page.
+// Public: Vite Plugin to optimize, resize, and process images consistently and with ease.
 export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Options): Plugin & { api: ImageApi } {
   let api: ImageApi
   let config: Config
