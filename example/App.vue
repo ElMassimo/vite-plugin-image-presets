@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import fullImage from './images/logo.png?preset=full'
+import hiresImage from './images/logo.png?preset=hires'
 import thumbnailImage from './images/logo.png?preset=thumbnail'
 </script>
 
@@ -10,6 +11,8 @@ import thumbnailImage from './images/logo.png?preset=thumbnail'
     <Image :src="thumbnailImage"/>
     <h2>Full</h2>
     <Image :src="fullImage"/>
+    <h2>Hi-Res</h2>
+    <Image :src="hiresImage"/>
   </main>
 </template>
 

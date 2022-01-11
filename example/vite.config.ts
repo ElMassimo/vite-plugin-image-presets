@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import imagePresets, { widthPreset } from 'vite-plugin-image-presets'
+import imagePresets, { widthPreset, densityPreset } from 'vite-plugin-image-presets'
 
 export default defineConfig({
   plugins: [
@@ -19,6 +19,16 @@ export default defineConfig({
         class: 'img thumbnail',
         loading: 'lazy',
         widths: [48, 96],
+        formats: {
+          webp: { quality: 50 },
+          jpg: { quality: 70 },
+        },
+      }),
+      hires: densityPreset({
+        class: 'img hires',
+        loading: 'lazy',
+        baseWidth: 100,
+        density: [1, 1.5, 3],
         formats: {
           webp: { quality: 50 },
           jpg: { quality: 70 },
