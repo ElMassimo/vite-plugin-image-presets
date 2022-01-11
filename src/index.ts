@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs'
 import type { Plugin } from 'vite'
-import { join } from 'pathe'
+import { join, resolve } from 'pathe'
 import serialize from '@nuxt/devalue'
 
 import type { Config, Options, ImageApi, ImagePresets } from './types'
@@ -27,21 +27,18 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
         urlParam: 'preset',
         base,
         root,
-        outDir,
-        assetsDir: join(assetsDir, 'images'),
+        outDir: resolve(root, outDir),
+        assetsDir,
         cacheDir: join(root, 'node_modules', '.images'),
         isBuild: command === 'build',
         ...options,
       }
       api = createImageApi(config)
 
-      if (config.isBuild) {
+      if (config.isBuild)
         await fs.mkdir(config.cacheDir, { recursive: true })
-        await fs.mkdir(join(config.outDir, config.assetsDir), { recursive: true })
-      }
     },
     async load (id) {
-      console.log(id, config.urlParam)
       if (!id.includes(config.urlParam)) return
 
       const { path, query } = parseId(id)
@@ -70,8 +67,9 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
         next()
       })
     },
-    async buildEnd () {
-      await api.waitForImages()
+    async generateBundle (_, output) {
+      const images = await api.waitForImages()
+      images.forEach(asset => { output[asset.fileName] = asset })
     },
   }
 }

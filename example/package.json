@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "cross-env DEBUG=image-presets:* vite --open",
     "build": "cross-env DEBUG=image-presets:* vite build --mode production",
-    "preview": "cross-env RAILS_ENV=production DEBUG=image-presets:* vite preview"
+    "preview": "cross-env RAILS_ENV=production DEBUG=image-presets:* vite preview",
+    "now": "npm run build && npm run preview"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.1",

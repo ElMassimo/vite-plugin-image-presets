@@ -1,6 +1,7 @@
+import type { OutputAsset } from 'rollup'
 
 import { promises as fs } from 'fs'
-import { basename, join, resolve, extname } from 'pathe'
+import { basename, join, resolve, relative, extname } from 'pathe'
 import createDebugger from 'debug'
 import type { Config, Image, ImageResult, ImageGenerator, ImageGeneratorArgs } from './types'
 
@@ -9,6 +10,7 @@ import { exists, generateImageID, formatFor, getAssetHash, loadImage } from './u
 const debug = {
   load: createDebugger('image-presets:load'),
   write: createDebugger('image-presets:write'),
+  total: createDebugger('image-presets:total'),
 }
 
 export const VIRTUAL_ID = '/@imagepresets/'
@@ -18,7 +20,7 @@ export function createImageApi (config: Config) {
   const requestedImagesById: Record<string, Image> = {}
 
   // Used in build to optmimize file lookups and prevent duplicate processing.
-  const generatedImages: Promise<any>[] = []
+  const generatedImages: Promise<OutputAsset>[] = []
   const imageHashesByFile: Record<string, Promise<string>> = {}
   const imageFilenamesById: Record<string, Promise<string>> = {}
 
@@ -27,7 +29,8 @@ export function createImageApi (config: Config) {
       return requestedImagesById[id]
     },
     async waitForImages () {
-      await Promise.all(generatedImages)
+      debug.total('%i image(s)', generatedImages.length)
+      return await Promise.all(generatedImages)
     },
     async resolveImage (filename: string, params: Record<string, any>): Promise<ImageResult> {
       const presetName = params[config.urlParam]
@@ -77,7 +80,7 @@ export function createImageApi (config: Config) {
     return join(config.assetsDir, filename)
   }
 
-  async function writeImageFile (filename: string, image: Image) {
+  async function writeImageFile (filename: string, image: Image): Promise<OutputAsset> {
     const { cacheDir, assetsDir, outDir } = config
     const cachedFilename = join(cacheDir, filename)
     const destFilename = join(outDir, assetsDir, filename)
@@ -87,7 +90,13 @@ export function createImageApi (config: Config) {
       await image.toFile(cachedFilename)
     }
 
-    await fs.copyFile(cachedFilename, destFilename)
+    return {
+      fileName: relative(config.outDir, destFilename),
+      name: filename,
+      source: await fs.readFile(cachedFilename) as any,
+      isAsset: true,
+      type: 'asset',
+    }
   }
 
   async function getImageSrc (filename: string, args: ImageGeneratorArgs, generate: ImageGenerator) {

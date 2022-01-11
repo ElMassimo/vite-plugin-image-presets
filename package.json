@@ -41,6 +41,7 @@
     "dev": "npm run build -- --watch",
     "example": "npm -C example run dev",
     "example:build": "npm -C example run build",
+    "example:now": "npm -C example run now",
     "build": "tsup src/index.ts --dts --format cjs,esm --clean",
     "release": "nr build && npm publish",
     "prepublishOnly": "npm run build",

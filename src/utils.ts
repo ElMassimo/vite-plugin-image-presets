@@ -13,6 +13,7 @@ function parseURL (rawURL: string) {
 
 export function generateImageID (url: string, args: any) {
   return createHash('sha256').update(url).update(JSON.stringify(args)).digest('hex').slice(0, 8)
+    + (args.format ? `.${args.format}` : '')
 }
 
 export function getAssetHash (content: string | Buffer) {
