@@ -30,7 +30,9 @@ export function createImageApi (config: Config) {
     },
     async waitForImages () {
       debug.total('%i image(s)', generatedImages.length)
-      return await Promise.all(generatedImages)
+      const assets = await Promise.all(generatedImages)
+      cleanCacheDir(assets.map(asset => asset.name!))
+      return assets
     },
     async resolveImage (filename: string, params: Record<string, any>): Promise<ImageResult> {
       const presetName = params[config.urlParam]
@@ -112,5 +114,14 @@ export function createImageApi (config: Config) {
     }
 
     return VIRTUAL_ID + id
+  }
+
+  async function cleanCacheDir (newFiles: string[]) {
+    const usedFiles = new Set(newFiles)
+    const cachedFiles = await fs.readdir(config.cacheDir)
+    cachedFiles.forEach(file => {
+      if (!usedFiles.has(file))
+        fs.rm(resolve(config.cacheDir, file), { force: true })
+    })
   }
 }
