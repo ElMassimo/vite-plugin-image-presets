@@ -20,15 +20,18 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
     name: 'image-presets',
     enforce: 'pre',
     get api () { return api },
-    async configResolved ({ base, command, root, build: { outDir, assetsDir } }) {
+    async configResolved ({ base, command, root, build: { assetsDir } }) {
+      if (api) return // NOTE: When reusing plugins for SSR build.
+
       config = {
         presets: presets!,
         urlParam: 'preset',
         base,
         root,
-        outDir: resolve(root, outDir),
         assetsDir,
         cacheDir: join(root, 'node_modules', '.images'),
+        purgeCache: true,
+        writeToBundle: true,
         isBuild: command === 'build',
         ...options,
       }
@@ -67,8 +70,11 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
       })
     },
     async generateBundle (_, output) {
-      const images = await api.waitForImages()
-      images.forEach(asset => { output[asset.fileName] = asset })
+      if (config.writeToBundle) {
+        const images = await api.waitForImages()
+        images.forEach(asset => { output[asset.fileName] = asset })
+        api.purgeCache(images)
+      }
     },
   }
 }

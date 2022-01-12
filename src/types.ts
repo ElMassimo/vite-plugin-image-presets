@@ -82,11 +82,20 @@ export interface Options {
    * @default 'preset'
    */
   urlParam?: string
+  /**
+   * Whether to remove cached files that are no longer used.
+   * @default true
+   */
+  purgeCache?: boolean
+  /**
+   * Whether to write generated images in the bundle.
+   * @default true
+   */
+  writeToBundle?: boolean
 }
 
 export interface Config extends Required<Options> {
   isBuild: boolean
-  outDir: string
   base: string
   root: string
 }

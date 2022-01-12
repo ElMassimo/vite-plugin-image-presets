@@ -11,6 +11,7 @@ const debug = {
   load: createDebugger('image-presets:load'),
   write: createDebugger('image-presets:write'),
   total: createDebugger('image-presets:total'),
+  cache: createDebugger('image-presets:cache'),
 }
 
 export const VIRTUAL_ID = '/@imagepresets/'
@@ -25,14 +26,35 @@ export function createImageApi (config: Config) {
   const imageFilenamesById: Record<string, Promise<string>> = {}
 
   return {
+    get config () {
+      return config
+    },
     async getImageById (id: string) {
       return await requestedImagesById[id]
     },
     async waitForImages () {
       debug.total('%i image(s)', generatedImages.length)
-      const assets = await Promise.all(generatedImages)
-      cleanCacheDir(assets.map(asset => asset.name!))
-      return assets
+      return await Promise.all(generatedImages)
+    },
+    async writeImages (outDir: string) {
+      const images = await Promise.all(generatedImages.map(async imagePromise => {
+        const image = await imagePromise
+        fs.writeFile(join(outDir, image.fileName), image.source)
+        return image
+      }))
+      this.purgeCache(images)
+    },
+    async purgeCache (assets: OutputAsset[]) {
+      if (!config.purgeCache)
+        return
+
+      const usedFiles = new Set(assets.map(asset => asset.name!))
+      const cachedFiles = await fs.readdir(config.cacheDir)
+      const unusedFiles = cachedFiles.filter(file => !usedFiles.has(file))
+      debug.cache('%i unused files', unusedFiles.length)
+      unusedFiles.forEach(file => {
+        fs.rm(resolve(config.cacheDir, file), { force: true })
+      })
     },
     async resolveImage (filename: string, params: Record<string, any>): Promise<ImageResult> {
       const presetName = params[config.urlParam]
@@ -83,9 +105,8 @@ export function createImageApi (config: Config) {
   }
 
   async function writeImageFile (filename: string, image: Image): Promise<OutputAsset> {
-    const { cacheDir, assetsDir, outDir } = config
+    const { cacheDir, assetsDir } = config
     const cachedFilename = join(cacheDir, filename)
-    const destFilename = join(outDir, assetsDir, filename)
 
     if (!await exists(cachedFilename)) {
       debug.write('%s', filename)
@@ -93,7 +114,7 @@ export function createImageApi (config: Config) {
     }
 
     return {
-      fileName: relative(config.outDir, destFilename),
+      fileName: join(config.assetsDir, filename),
       name: filename,
       source: await fs.readFile(cachedFilename) as any,
       isAsset: true,
@@ -114,14 +135,5 @@ export function createImageApi (config: Config) {
     }
 
     return VIRTUAL_ID + id
-  }
-
-  async function cleanCacheDir (newFiles: string[]) {
-    const usedFiles = new Set(newFiles)
-    const cachedFiles = await fs.readdir(config.cacheDir)
-    cachedFiles.forEach(file => {
-      if (!usedFiles.has(file))
-        fs.rm(resolve(config.cacheDir, file), { force: true })
-    })
   }
 }
