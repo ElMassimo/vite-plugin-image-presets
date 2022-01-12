@@ -1,17 +1,38 @@
-import type { Sharp, FormatEnum } from 'sharp'
+import type {
+  Sharp,
+  OutputOptions,
+  AvifOptions,
+  GifOptions,
+  HeifOptions,
+  JpegOptions,
+  PngOptions,
+  TiffOptions,
+  WebpOptions,
+} from 'sharp'
 import { createImageApi } from './api'
 
 export type ImageApi = ReturnType<typeof createImageApi>
 
 export type Image = Sharp
-export type ImageFormat = keyof FormatEnum
-export type ImageFormats = { [k in ImageFormat]?: any }
+export interface ImageFormatOptions {
+  avif: AvifOptions
+  gif: GifOptions
+  heif: HeifOptions
+  jpeg: JpegOptions
+  jpg: JpegOptions
+  png: PngOptions
+  tiff: TiffOptions
+  tif: TiffOptions
+  webp: WebpOptions
+}
+export type ImageFormats = Partial<ImageFormatOptions>
+export type ImageFormat = keyof ImageFormatOptions
 
 export type ImageAttrs = Partial<HTMLImageElement> & { class?: string }
 export type ImageResult = ImageAttrs[] & { src?: string }
 
 export type ImageGeneratorArgs = Record<string, any>
-export type ImageGenerator = (image: Sharp, args: ImageGeneratorArgs) => Sharp
+export type ImageGenerator = (image: Image, args: ImageGeneratorArgs) => Image | Promise<Image>
 export interface ImageSpec {
   /**
    * A condition descriptor that specifies when the image should be used.
