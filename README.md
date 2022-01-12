@@ -39,7 +39,7 @@ export default defineConfig({
   plugins: [
     imagePresets({
       thumbnail: widthPreset({
-        class: 'thumbnail',
+        class: 'img thumb',
         loading: 'lazy',
         widths: [48, 96],
         formats: {
@@ -61,6 +61,14 @@ import thumbnails from '~/images/logo.jpg?preset=thumbnail'
 Check the [example] for additional usage information.
 
 More documentation coming soon, in [îles].
+
+## Acknowledgements
+
+- [sharp][sharp]: High performance Node.js image processing
+
+The `hdPreset` is based on the following article by Jake Archibald:
+
+- [Halve the size of images by optimising for high density displays](https://jakearchibald.com/2021/serving-sharp-images-to-high-density-screens/)
 
 ## License
 
