@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { $computed } from 'vue/macros'
-const { src } = defineProps<{ src: string | any[] }>()
+import { computed } from 'vue'
+const props = defineProps<{ src: string | any[] }>()
 
-const allSources = $computed(() => Array.isArray(src) ? src : [{ srcset: src }])
-const sources = $computed(() => allSources.slice(0, -1))
-const lastSource = $computed(() => allSources[allSources.length - 1])
+const allSources = computed(() =>
+  Array.isArray(props.src) ? props.src : [{ srcset: props.src }])
+
+const sources = computed(() => allSources.value.slice(0, -1))
+const lastSource = computed(() => allSources.value[allSources.value.length - 1])
 </script>
 
 <script lang="ts">

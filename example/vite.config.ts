@@ -1,35 +1,58 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import imagePresets, { formatPreset, widthPreset, densityPreset } from 'vite-plugin-image-presets'
+import imagePresets, { hdPreset, formatPreset, widthPreset, densityPreset } from 'vite-plugin-image-presets'
+import type { Image } from 'vite-plugin-image-presets'
+
+const rectFor = (width: number, height: number = width) => new Buffer(
+  `<svg><rect x="0" y="0" width="${width}" height="${height}" rx="${width / 4}" ry="${height / 4}"/></svg>`
+)
+
+const withRoundBorders = (image: Image) => {
+  const { width, height } = image.options
+  return image
+    .resize({ width, height: width, fit: 'cover' })
+    .composite([{ input: rectFor(width), blend: 'dest-in' }])
+}
 
 export default defineConfig({
   plugins: [
     vue({ reactivityTransform: true }),
     imagePresets({
+      hd: hdPreset({
+        class: 'img hd',
+        widths: [440, 700],
+        sizes: '(min-width: 700px) 700px, 100vw',
+        formats: {
+          avif: { quality: 44 },
+          webp: { quality: 44 },
+          jpg: { quality: 50 },
+        },
+      }),
       full: formatPreset({
         class: 'img full-width',
-        loading: 'lazy',
         formats: {
           avif: { quality: 80 },
+          webp: { quality: 80 },
           png: { quality: 70 },
         },
       }),
-      thumbnail: widthPreset({
+      thumbnail: hdPreset({
         class: 'img thumbnail',
-        loading: 'lazy',
-        widths: [48, 96],
+        widths: [48],
         formats: {
-          avif: { quality: 50 },
-          original: {},
+          png: { quality: 44 },
         },
       }),
-      density: densityPreset({
+      round: densityPreset({
         class: 'img density',
-        loading: 'lazy',
-        baseWidth: 100,
+        baseWidth: 150,
         density: [1, 1.5, 2],
+        resizeOptions: {
+          fit: 'cover',
+        },
+        withImage: withRoundBorders,
         formats: {
-          webp: { lossless: true },
+          webp: { quality: 40 },
           original: {},
         },
       }),
