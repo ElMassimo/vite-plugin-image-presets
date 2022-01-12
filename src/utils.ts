@@ -30,6 +30,7 @@ export function formatFor (image: Image): ImageFormat {
     console.error('Could not infer image format for', image)
     throw new Error('Could not infer image format')
   }
+  if (format === 'heif') return 'avif'
   return format
 }
 
