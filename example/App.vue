@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import fullImage from './images/logo.png?preset=full'
-import hiresImage from './images/logo.png?preset=hires'
+import densityImage from './images/logo.png?preset=density'
 import thumbnailImage from './images/logo.png?preset=thumbnail'
 </script>
 
 <template>
   <main>
     <h1>Gallery</h1>
-    <h2>Thumbnail</h2>
+    <h2>Thumb</h2>
     <Image :src="thumbnailImage"/>
+    <h2>Density</h2>
+    <Image :src="densityImage"/>
     <h2>Full</h2>
     <Image :src="fullImage"/>
-    <h2>Hi-Res</h2>
-    <Image :src="hiresImage"/>
   </main>
 </template>
 

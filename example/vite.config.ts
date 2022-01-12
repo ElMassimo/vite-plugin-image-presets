@@ -1,15 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import imagePresets, { widthPreset, densityPreset } from 'vite-plugin-image-presets'
+import imagePresets, { formatPreset, widthPreset, densityPreset } from 'vite-plugin-image-presets'
 
 export default defineConfig({
   plugins: [
     vue({ reactivityTransform: true }),
     imagePresets({
-      full: widthPreset({
+      full: formatPreset({
         class: 'img full-width',
         loading: 'lazy',
-        widths: [768, 1440],
         formats: {
           avif: { quality: 80 },
           png: { quality: 70 },
@@ -20,18 +19,18 @@ export default defineConfig({
         loading: 'lazy',
         widths: [48, 96],
         formats: {
-          webp: { quality: 50 },
-          jpg: { quality: 70 },
+          avif: { quality: 50 },
+          original: {},
         },
       }),
-      hires: densityPreset({
-        class: 'img hires',
+      density: densityPreset({
+        class: 'img density',
         loading: 'lazy',
         baseWidth: 100,
-        density: [1, 1.5, 3],
+        density: [1, 1.5, 2],
         formats: {
-          webp: { quality: 50 },
-          jpg: { quality: 70 },
+          webp: { lossless: true },
+          original: {},
         },
       }),
     }),
