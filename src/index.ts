@@ -47,11 +47,11 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
       return `export default ${serialize(images)}`
     },
     configureServer (server) {
-      server.middlewares.use((req, res, next) => {
+      server.middlewares.use(async (req, res, next) => {
         if (req.url?.startsWith(VIRTUAL_ID)) {
           const [, id] = req.url.split(VIRTUAL_ID)
 
-          const image = api.getImageById(id)
+          const image = await api.getImageById(id)
 
           if (!image)
             throw new Error(`vite-image-presets cannot find image with id "${id}" this is likely an internal error`)

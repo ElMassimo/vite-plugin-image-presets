@@ -17,7 +17,7 @@ export const VIRTUAL_ID = '/@imagepresets/'
 
 export function createImageApi (config: Config) {
   // Used in dev and build to ensure images are loaded only once.
-  const requestedImagesById: Record<string, Image> = {}
+  const requestedImagesById: Record<string, Image | Promise<Image>> = {}
 
   // Used in build to optmimize file lookups and prevent duplicate processing.
   const generatedImages: Promise<OutputAsset>[] = []
@@ -25,8 +25,8 @@ export function createImageApi (config: Config) {
   const imageFilenamesById: Record<string, Promise<string>> = {}
 
   return {
-    getImageById (id: string) {
-      return requestedImagesById[id]
+    async getImageById (id: string) {
+      return await requestedImagesById[id]
     },
     async waitForImages () {
       debug.total('%i image(s)', generatedImages.length)
@@ -103,9 +103,10 @@ export function createImageApi (config: Config) {
     filename = resolve(config.root, filename)
     const id = generateImageID(filename, args)
 
-    const image = requestedImagesById[id] ||= generate(loadImage(filename), args)
+    requestedImagesById[id] ||= generate(loadImage(filename), args)
 
     if (config.isBuild) {
+      const image = await requestedImagesById[id]
       imageFilenamesById[id] ||= queueImageAndGetFilename(id, filename, image)
       return config.base + await imageFilenamesById[id]
     }
