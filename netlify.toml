@@ -6,3 +6,9 @@
   ignore = "git diff --quiet 'HEAD^' HEAD ."
   publish = "example/dist"
   command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm build && npx pnpm -C example build"
+
+[[plugins]]
+  package = "netlify-plugin-cache"
+    [plugins.inputs]
+    # Optional (but highly recommended). Defaults to [".cache"].
+    paths = [".images"]

@@ -58,6 +58,6 @@ export default defineConfig({
           png: { quality: 40 },
         },
       }),
-    }),
+    }, { cacheDir: '.images' }),
   ],
 })
