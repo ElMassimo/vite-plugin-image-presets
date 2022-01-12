@@ -1,33 +1,31 @@
 <script setup lang="ts">
+import logoImage from './images/logo.svg?preset=thumbnail'
 import pandaImage from './images/panda.png?preset=hd'
 import fullImage from './images/vite-ruby.png?preset=full'
 import roundImage from './images/iles.svg?preset=round'
-import thumbnailImage from './images/logo.png?preset=thumbnail'
+import thumbnailImage from './images/vite-rails.png?preset=thumbnail'
 </script>
 
 <template>
   <main>
     <h1>
       <ExternalLink href="https://github.com/ElMassimo/vite-plugin-image-presets">
-        <code>vite-plugin-image-presets</code>
+        <Image :src="logoImage"/>
+        <p style="margin-top: 0"><code>vite-plugin-image-presets</code></p>
       </ExternalLink>
     </h1>
-    <h2>Thumb</h2>
     <ExternalLink href="https://vite-ruby.netlify.app">
       <Image :src="thumbnailImage"/>
       <Caption>Optimized based on screen density and size, single-format</Caption>
     </ExternalLink>
-    <h2>Round</h2>
     <ExternalLink href="https://iles-docs.netlify.app">
       <Image :src="roundImage"/>
       <Caption>A custom transform squares the image and rounds its borders</Caption>
     </ExternalLink>
-    <h2>HD</h2>
     <ExternalLink href="https://jakearchibald.com/2021/serving-sharp-images-to-high-density-screens/">
       <Image :src="pandaImage"/>
       <Caption>Optimized based on screen density and size, multi-format</Caption>
     </ExternalLink>
-    <h2>Full</h2>
     <ExternalLink href="https://vite-ruby.netlify.app">
       <Image :src="fullImage"/>
       <Caption>No resizing, multi-format</Caption>
@@ -85,6 +83,7 @@ main a {
 }
 
 .img {
+  margin-top: 1.5rem;
   max-height: 100vh;
   max-width: min(700px, 100%);
 }

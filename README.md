@@ -1,4 +1,10 @@
-<h2 align='center'><samp>vite-plugin-image-presets</samp></h2>
+<h2 align='center'>
+  <a href="https://vite-ruby.netlify.app/">
+    <img src="https://raw.githubusercontent.com/ElMassimo/vite-plugin-image-presets/main/example/images/logo.svg" width="100px"/>
+  </a>
+  <br>
+  <samp>vite-plugin-image-presets</samp>
+</h2>
 
 <p align='center'>Image Presets for Vite.js apps</p>
 
@@ -17,9 +23,12 @@
 [Sharp]: https://sharp.pixelplumbing.com/
 [îles]: https://iles-docs.netlify.app/
 [example]: https://github.com/ElMassimo/vite-plugin-image-presets/blob/main/example/App.vue#L10
+[live]: https://image-presets.netlify.app/
 
 This [Vite] plugin allows you to define presets for image processing using [Sharp],
 allowing you to optimize, resize, and process images consistently and with ease.
+
+[Demo 🖼][live]
 
 ## Installation 💿
 
@@ -58,7 +67,7 @@ For example, this preset will be used whenever an image URL has `?preset=thumbna
 import thumbnails from '~/images/logo.jpg?preset=thumbnail'
 ```
 
-Check the [example] for additional usage information.
+Check the [example] for additional usage information, or [see it live][live].
 
 More documentation coming soon, in [îles].
 
