@@ -72,7 +72,7 @@ export function createImageApi (config: Config) {
   async function queueImageAndGetFilename (id: string, sourceFilename: string, image: Image) {
     const base = basename(sourceFilename, extname(sourceFilename))
     const hash = getAssetHash(id + await getImageHash(sourceFilename))
-    const format = formatFor(image)
+    const format = await formatFor(image)
     const filename = `${base}.${hash}.${format}`
 
     generatedImages.push(writeImageFile(filename, image))

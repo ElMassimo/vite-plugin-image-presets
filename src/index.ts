@@ -56,7 +56,7 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
           if (!image)
             throw new Error(`vite-image-presets cannot find image with id "${id}" this is likely an internal error`)
 
-          res.setHeader('Content-Type', `image/${formatFor(image)}`)
+          res.setHeader('Content-Type', `image/${await formatFor(image)}`)
           res.setHeader('Cache-Control', 'max-age=360000')
           return image.clone()
             .on('error', err => console.error(err))

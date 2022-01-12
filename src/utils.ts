@@ -13,7 +13,7 @@ function parseURL (rawURL: string) {
 
 export function generateImageID (url: string, args: any) {
   return createHash('sha256').update(url).update(JSON.stringify(args)).digest('hex').slice(0, 8)
-    + (args.format ? `.${args.format}` : '')
+    + (args.format && args.format !== 'original' ? `.${args.format}` : '')
 }
 
 export function getAssetHash (content: string | Buffer) {
@@ -24,8 +24,11 @@ export async function exists (path: string) {
   return await fs.access(path, fsConstants.F_OK).then(() => true, () => false)
 }
 
-export function formatFor (image: Image): ImageFormat {
-  const format = (image as any).options?.formatOut
+export async function formatFor (image: Image): Promise<ImageFormat> {
+  let format = (image as any).options?.formatOut
+  if (format === 'input') {
+    format = (await image.metadata()).format
+  }
   if (!format) {
     console.error('Could not infer image format for', image)
     throw new Error('Could not infer image format')
@@ -34,7 +37,8 @@ export function formatFor (image: Image): ImageFormat {
   return format
 }
 
-export function mimeTypeFor (format: ImageFormat) {
+export function mimeTypeFor (format: ImageFormat | 'original') {
+  if (format === 'original') return undefined
   if (format === 'jpg') format = 'jpeg'
   return `image/${format}`
 }
