@@ -33,7 +33,7 @@ export default defineConfig({
         formats: {
           avif: { quality: 80 },
           webp: { quality: 80 },
-          png: { quality: 70 },
+          original: {},
         },
       }),
       thumbnail: hdPreset({
@@ -53,7 +53,7 @@ export default defineConfig({
         withImage: withRoundBorders,
         formats: {
           webp: { quality: 40 },
-          original: {},
+          png: { quality: 40 },
         },
       }),
     }),

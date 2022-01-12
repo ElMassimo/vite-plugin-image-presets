@@ -1,6 +1,6 @@
 <h2 align='center'>
-  <a href="https://vite-ruby.netlify.app/">
-    <img src="https://raw.githubusercontent.com/ElMassimo/vite-plugin-image-presets/main/example/images/logo.svg" width="100px"/>
+  <a href="https://image-presets.netlify.app/">
+    <img src="https://github.com/ElMassimo/vite-plugin-image-presets/blob/main/example/images/logo.svg" width="100px"/>
   </a>
   <br>
   <samp>vite-plugin-image-presets</samp>
@@ -28,7 +28,7 @@
 This [Vite] plugin allows you to define presets for image processing using [Sharp],
 allowing you to optimize, resize, and process images consistently and with ease.
 
-[Demo 🖼][live]
+[__Demo__ 🖼][live]
 
 ## Installation 💿
 
