@@ -38,6 +38,7 @@ export default defineConfig({
       }),
       thumbnail: hdPreset({
         class: 'img thumbnail',
+        height: 48, // avoid layout shift
         widths: [48],
         formats: {
           png: { quality: 44 },
@@ -45,6 +46,7 @@ export default defineConfig({
       }),
       round: densityPreset({
         class: 'img density',
+        height: 150, // avoid layout shift
         baseWidth: 150,
         density: [1, 1.5, 2],
         resizeOptions: {
