@@ -102,5 +102,5 @@ export function extractSourceAttrs ({ media, sizes, ...attrs }: any): [ImageAttr
   const sourceAttrs: Partial<ImageSource> = {}
   if (media) sourceAttrs.media = media
   if (sizes) sourceAttrs.sizes = sizes
-  return [attrs, sourceAttrs]
+  return [{ loading: 'lazy', ...attrs }, sourceAttrs]
 }
