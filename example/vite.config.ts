@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import imagePresets, { hdPreset, formatPreset, widthPreset, densityPreset } from 'vite-plugin-image-presets'
 import type { Image } from 'vite-plugin-image-presets'
@@ -58,6 +59,10 @@ export default defineConfig({
           png: { quality: 40 },
         },
       }),
-    }, { cacheDir: '.images' }),
+    },
+    {
+      // The node modules Netlify will cache are in the top dir.
+      cacheDir: resolve(__dirname, '../node_modules/.images'),
+    }),
   ],
 })

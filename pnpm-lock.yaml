@@ -16,7 +16,6 @@ importers:
       eslint: ^7.17.0
       happy-dom: ^2.25.1
       minimist: ^1.2.5
-      netlify-plugin-cache: ^1.0.3
       pathe: ^0.2.0
       picocolors: ^1.0.0
       rollup: ^2.59
@@ -42,7 +41,6 @@ importers:
       eslint: 7.18.0
       happy-dom: 2.25.1
       minimist: 1.2.5
-      netlify-plugin-cache: 1.0.3
       picocolors: 1.0.0
       rollup: 2.63.0
       semver: 7.3.5
@@ -2874,10 +2872,6 @@ packages:
 
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
-    dev: true
-
-  /netlify-plugin-cache/1.0.3:
-    resolution: {integrity: sha512-CTOwNWrTOP59T6y6unxQNnp1WX702v2R/faR5peSH94ebrYfyY4zT5IsRcIiHKq57jXeyCrhy0GLuTN8ktzuQg==}
     dev: true
 
   /node-abi/3.5.0:

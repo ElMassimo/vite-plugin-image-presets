@@ -109,7 +109,7 @@ export function createImageApi (config: Config) {
     const cachedFilename = join(cacheDir, filename)
 
     if (!await exists(cachedFilename)) {
-      debug.write('%s', filename)
+      debug.write('%s', cachedFilename)
       await image.toFile(cachedFilename)
     }
 
