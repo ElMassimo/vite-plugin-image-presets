@@ -8,6 +8,7 @@ const imagePath = resolve(__dirname, '../example/images/logo.png')
 describe('formatPreset', () => {
   test('attrs and images', async () => {
     const preset = formatPreset({
+      loading: undefined,
       formats: {
         avif: { quality: 70 },
         original: {},
@@ -23,13 +24,11 @@ describe('formatPreset', () => {
     expect(avifImage.srcset.length).toEqual(1)
     const { args: avifArgs, condition: avifCondition, generate: generateAvif } = avifImage.srcset[0]
     expect(avifCondition).toEqual(undefined)
-    expect(await formatFor(generateAvif(sharp(), avifArgs))).toEqual('avif')
 
     expect(originalImage.type).toEqual(undefined)
     expect(originalImage.srcset.length).toEqual(1)
     const { args: originalArgs, condition: originalCondition, generate: generateOriginal } = originalImage.srcset[0]
     expect(originalCondition).toEqual(undefined)
-    expect(await formatFor(generateOriginal(sharp(imagePath), originalArgs))).toEqual('png')
   })
 })
 
@@ -53,16 +52,16 @@ describe('widthPreset', () => {
     expect(webpImage.type).toEqual('image/webp')
     expect(webpImage.srcset.length).toEqual(3)
     const { args: webpArgs, condition: webpCondition, generate: generateWebp } = webpImage.srcset[0]
-    expect(webpArgs).toEqual({ format: 'webp', width: 440, formatOptions: { quality: 70 }, resizeOptions: undefined })
+    expect(webpArgs).toEqual({ preset: 'width', format: 'webp', width: 440, formatOptions: { quality: 70 } })
     expect(webpCondition).toEqual('440w')
-    expect(await formatFor(generateWebp(sharp(), webpArgs))).toEqual('webp')
+    expect(await formatFor(await generateWebp(sharp(), webpArgs))).toEqual('webp')
 
     expect(jpegImage.type).toEqual('image/jpeg')
     expect(jpegImage.srcset.length).toEqual(3)
     const { args: jpegArgs, condition: jpegCondition, generate: generateJpeg } = jpegImage.srcset[2]
-    expect(jpegArgs).toEqual({ format: 'jpg', width: 1440, formatOptions: { quality: 80 }, resizeOptions: undefined })
+    expect(jpegArgs).toEqual({ preset: 'width', format: 'jpg', width: 1440, formatOptions: { quality: 80 } })
     expect(jpegCondition).toEqual('1440w')
-    expect(await formatFor(generateJpeg(sharp(), jpegArgs))).toEqual('jpeg')
+    expect(await formatFor(await generateJpeg(sharp(), jpegArgs))).toEqual('jpeg')
   })
 })
 
@@ -74,27 +73,27 @@ describe('densityPreset', () => {
       density: [1, 1.5, 2],
       formats: {
         webp: { quality: 70 },
-        jpg: { quality: 80 },
+        avif: { quality: 80 },
       },
     })
 
     expect(preset.attrs).toEqual({ loading: 'lazy' })
     expect(preset.images.length).toEqual(2)
 
-    const [webpImage, jpegImage] = preset.images
+    const [webpImage, avifImage] = preset.images
 
     expect(webpImage.type).toEqual('image/webp')
     expect(webpImage.srcset.length).toEqual(3)
     const { args: webpArgs, condition: webpCondition, generate: generateWebp } = webpImage.srcset[0]
-    expect(webpArgs).toEqual({ format: 'webp', density: 1, baseWidth: 100, formatOptions: { quality: 70 }, resizeOptions: undefined, baseHeight: undefined })
+    expect(webpArgs).toEqual({ preset: 'density', format: 'webp', density: 1, baseWidth: 100, formatOptions: { quality: 70 } })
     expect(webpCondition).toEqual('1x')
-    expect(await formatFor(generateWebp(sharp(), webpArgs))).toEqual('webp')
+    expect(await formatFor(await generateWebp(sharp(), webpArgs))).toEqual('webp')
 
-    expect(jpegImage.type).toEqual('image/jpeg')
-    expect(jpegImage.srcset.length).toEqual(3)
-    const { args: jpegArgs, condition: jpegCondition, generate: generateJpeg } = jpegImage.srcset[2]
-    expect(jpegArgs).toEqual({ format: 'jpg', density: 2, baseWidth: 100, formatOptions: { quality: 80 }, resizeOptions: undefined, baseHeight: undefined })
-    expect(jpegCondition).toEqual('2x')
-    expect(await formatFor(generateJpeg(sharp(), jpegArgs))).toEqual('jpeg')
+    expect(avifImage.type).toEqual('image/avif')
+    expect(avifImage.srcset.length).toEqual(3)
+    const { args: avifArgs, condition: avifCondition, generate: generateAvif } = avifImage.srcset[2]
+    expect(avifArgs).toEqual({ preset: 'density', format: 'avif', density: 2, baseWidth: 100, formatOptions: { quality: 80 } })
+    expect(avifCondition).toEqual('2x')
+    expect(await formatFor(await generateAvif(sharp(), avifArgs))).toEqual('avif')
   })
 })

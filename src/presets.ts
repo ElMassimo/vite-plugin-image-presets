@@ -1,6 +1,6 @@
 import type { ResizeOptions } from 'sharp'
 import type { ImageAttrs, ImageGenerator, ImageFormat, ImageFormats, ImagePreset, ImageSource } from './types'
-import { mimeTypeFor } from './utils'
+import { cleanObject, mimeTypeFor } from './utils'
 
 type FormatOptions = ImageFormats & { original?: {} }
 
@@ -34,7 +34,7 @@ export function widthPreset ({ density, widths, formats, resizeOptions, withImag
       .map(([format, formatOptions]) => ({
         ...sourceAttrs,
         type: mimeTypeFor(format as ImageFormat),
-        srcset: widths.map(width => ({
+        srcset: widths.map(width => cleanObject({
           condition: width === 'original' ? undefined : `${width}w`,
           args: { preset: 'width', format, width, density, formatOptions, resizeOptions },
           generate: async (image, args) => {
@@ -75,7 +75,7 @@ export function densityPreset ({ baseWidth, baseHeight, density, formats, resize
       .map(([format, formatOptions]) => ({
         ...sourceAttrs,
         type: mimeTypeFor(format as ImageFormat),
-        srcset: density.map(density => ({
+        srcset: density.map(density => cleanObject({
           condition: `${density}x`,
           args: { preset: 'density', format, density, baseWidth, baseHeight, formatOptions, resizeOptions },
           generate: async (image, args) => {
@@ -99,8 +99,5 @@ export function densityPreset ({ baseWidth, baseHeight, density, formats, resize
 }
 
 export function extractSourceAttrs ({ media, sizes, ...attrs }: any): [ImageAttrs, Partial<ImageSource>] {
-  const sourceAttrs: Partial<ImageSource> = {}
-  if (media) sourceAttrs.media = media
-  if (sizes) sourceAttrs.sizes = sizes
-  return [{ loading: 'lazy', ...attrs }, sourceAttrs]
+  return [cleanObject({ loading: 'lazy', ...attrs }), cleanObject({ media, sizes })]
 }

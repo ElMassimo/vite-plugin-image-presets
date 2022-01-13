@@ -48,3 +48,18 @@ export function groupBy<T> (items: T[], key: keyof T): Record<string, T[]> {
   items.forEach(item => (result[item[key] as any] ||= []).push(item))
   return result
 }
+
+// Internal: Removes any keys with undefined or null values from the object.
+export function cleanObject<T extends Record<string, any>> (object: T): T {
+  Object.keys(object).forEach((key) => {
+    const value = object[key]
+    if (value === undefined || value === null) delete object[key]
+    else if (isObject(value)) cleanObject(value)
+  })
+  return object
+}
+
+// Internal: Returns true if the specified value is a plain JS object
+export function isObject (value: unknown): value is Record<string, any> {
+  return Object.prototype.toString.call(value) === '[object Object]'
+}
