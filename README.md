@@ -67,6 +67,8 @@ For example, this preset will be used whenever an image URL has `?preset=thumbna
 import thumbnails from '~/images/logo.jpg?preset=thumbnail'
 ```
 
+At the moment the default export is an array of `source` and `img` attributes which requires special handling (see `Image.vue` in the example), but support for simpler use cases for direct usage in HTML and Vue SFCs `img` and `source` tags will be added in the next version.
+
 Check the [example] for additional usage information, or [see it live][live].
 
 More documentation coming soon, in [îles].
