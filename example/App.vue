@@ -18,7 +18,7 @@ import fullImage from '@images/vite-ruby.png?preset=full'
     </h1>
     <ExternalLink href="https://vite-ruby.netlify.app">
       <img srcset="@images/vite-rails.png?preset=thumbnail&srcset" height="48"/>
-      <Caption>Optimized based on screen density and size, single-format</Caption>
+      <Caption>Optimized based on screen density, single-format</Caption>
     </ExternalLink>
     <ExternalLink href="https://iles-docs.netlify.app">
       <Image :src="roundImage"/>
