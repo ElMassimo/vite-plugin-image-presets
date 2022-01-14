@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import logoImage from './images/logo.svg?preset=thumbnail'
-import pandaImage from './images/panda.png?preset=hd'
-import fullImage from './images/vite-ruby.png?preset=full'
-import roundImage from './images/iles.svg?preset=round'
-import thumbnailImage from './images/vite-rails.png?preset=thumbnail'
+import roundImage from '@images/iles.svg?preset=round'
+import pandaImage from '@images/panda.png?preset=hd'
+import fullImage from '@images/vite-ruby.png?preset=full'
 </script>
 
 <template>
   <main>
     <h1>
       <ExternalLink href="https://github.com/ElMassimo/vite-plugin-image-presets">
-        <Image :src="logoImage"/>
+        <img srcset="@images/logo.svg?preset=thumbnail&srcset" height="48"/>
         <p style="margin-top: 0"><code>vite-plugin-image-presets</code></p>
       </ExternalLink>
     </h1>
     <ExternalLink href="https://vite-ruby.netlify.app">
-      <Image :src="thumbnailImage"/>
+      <img srcset="@images/vite-rails.png?preset=thumbnail&srcset" height="48"/>
       <Caption>Optimized based on screen density and size, single-format</Caption>
     </ExternalLink>
     <ExternalLink href="https://iles-docs.netlify.app">
@@ -86,10 +84,6 @@ main a {
   margin-top: 1.5rem;
   max-height: 100vh;
   max-width: min(700px, 100%);
-}
-
-.thumbnail {
-  width: 48px;
 }
 
 h2 {

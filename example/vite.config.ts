@@ -16,8 +16,23 @@ const withRoundBorders = (image: Image) => {
 }
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@images': resolve(__dirname, 'images'),
+    },
+  },
   plugins: [
-    vue({ reactivityTransform: true }),
+    vue({
+      reactivityTransform: true,
+      template: {
+        transformAssetUrls: {
+          tags: {
+            source: ['src', 'srcset'],
+            img: ['src', 'srcset'],
+          }
+        },
+      },
+    }),
     imagePresets({
       hd: hdPreset({
         class: 'img hd',
@@ -37,10 +52,9 @@ export default defineConfig({
           original: {},
         },
       }),
-      thumbnail: hdPreset({
-        class: 'img thumbnail',
-        height: 48, // avoid layout shift
-        widths: [48],
+      thumbnail: densityPreset({
+        baseHeight: 48,
+        density: [1, 1.5, 2],
         formats: {
           png: { quality: 44 },
         },
