@@ -29,7 +29,6 @@ export type ImageFormats = Partial<ImageFormatOptions>
 export type ImageFormat = keyof ImageFormatOptions
 
 export type ImageAttrs = Partial<HTMLImageElement> & { class?: string }
-export type ImageResult = ImageAttrs[] & { src?: string }
 
 export type ImageGeneratorArgs = Record<string, any>
 export type ImageGenerator = (image: Image, args: ImageGeneratorArgs) => Image | Promise<Image>

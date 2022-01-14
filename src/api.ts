@@ -3,7 +3,7 @@ import type { OutputAsset } from 'rollup'
 import { promises as fs } from 'fs'
 import { basename, join, resolve, relative, extname } from 'pathe'
 import createDebugger from 'debug'
-import type { Config, Image, ImageResult, ImageGenerator, ImageGeneratorArgs } from './types'
+import type { Config, Image, ImageAttrs, ImageGenerator, ImageGeneratorArgs } from './types'
 
 import { exists, generateImageID, formatFor, getAssetHash, loadImage } from './utils'
 
@@ -56,8 +56,8 @@ export function createImageApi (config: Config) {
         fs.rm(resolve(config.cacheDir, file), { force: true })
       })
     },
-    async resolveImage (filename: string, params: Record<string, any>): Promise<ImageResult> {
-      const presetName = params[config.urlParam]
+    async resolveImage (filename: string, params: Record<string, any>): Promise<string | ImageAttrs[]> {
+      const { [config.urlParam]: presetName, srcset, otherParams } = params
       const preset = config.presets[presetName]
 
       debug.load('%O %s', params, filename)
@@ -66,13 +66,13 @@ export function createImageApi (config: Config) {
         throw new Error(`vite-image-presets: Unknown image preset '${presetName}'`)
 
       let lastSrc
-      const imageResult: ImageResult = await Promise.all(
+      const imagesAttrs: ImageAttrs[] = await Promise.all(
         preset.images.map(async ({ srcset, ...source }) => ({
           ...source,
           srcset: (
             await Promise.all(
               srcset.map(async ({ condition, args, generate }) => [
-                lastSrc = await getImageSrc(filename, args, generate),
+                lastSrc = await getImageSrc(filename, { ...args, ...otherParams }, generate),
                 condition,
               ].filter(x => x).join(' ')),
             )
@@ -80,12 +80,19 @@ export function createImageApi (config: Config) {
         })),
       )
 
+      const lastImage = imagesAttrs[imagesAttrs.length - 1]
+
+      // Allow direct usage in `img` and `source` srcset
+      if (srcset !== undefined) {
+        console.log({ imagesAttrs })
+        return lastImage.srcset!
+      }
+
       // Set the attrs for the img element.
-      const lastImage = imageResult[imageResult.length - 1]
       Object.assign(lastImage, preset.attrs)
       lastImage.src ||= lastSrc
 
-      return imageResult
+      return imagesAttrs
     },
   }
 
