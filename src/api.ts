@@ -57,7 +57,7 @@ export function createImageApi (config: Config) {
       })
     },
     async resolveImage (filename: string, params: Record<string, any>): Promise<undefined | string | ImageAttrs[]> {
-      const { [config.urlParam]: presetName, src, srcset, otherParams } = params
+      const { [config.urlParam]: presetName, src, srcset, ...otherParams } = params
       const preset = config.presets[presetName]
 
       debug.load('%O %s', params, filename)
