@@ -56,8 +56,11 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
 
           const image = await api.getImageById(id)
 
-          if (!image)
-            throw new Error(`vite-image-presets cannot find image with id "${id}" this is likely an internal error`)
+          if (!image) {
+            console.error(`vite-image-presets cannot find image with id "${id}" this is likely an internal error`)
+            res.statusCode = 404
+            return res.end()
+          }
 
           res.setHeader('Content-Type', `image/${await formatFor(image)}`)
           res.setHeader('Cache-Control', 'max-age=360000')
