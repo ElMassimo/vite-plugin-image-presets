@@ -36,7 +36,7 @@ allowing you to optimize, resize, and process images consistently and with ease.
 npm install -D vite-plugin-image-presets # pnpm, yarn
 ```
 
-## Usage 🚀
+## Configuration ⚙️
 
 Add it to your plugins in `vite.config.ts`
 
@@ -61,15 +61,42 @@ export default defineConfig({
 })
 ```
 
-For example, this preset will be used whenever an image URL has `?preset=thumbnail`:
+### Usage 🚀
+
+Use the `preset` query parameter to obtain an array of `source` and `img` attrs:
 
 ```js
 import thumbnails from '~/images/logo.jpg?preset=thumbnail'
+
+expect(thumbnails).toEqual([
+  {
+    type: 'image/webp',
+    srcset: '/assets/logo.ffc730c4.webp 48w, /assets/logo.1f874174.webp 96w',
+  },
+  {
+    type: 'image/jpeg',
+    srcset: '/assets/logo.063759b1.jpeg 48w, /assets/logo.81d93491.jpeg 96w',
+    src: '/assets/logo.81d93491.jpeg',
+    class: 'img thumb',
+    loading: 'lazy',
+  },
+])
 ```
 
-At the moment the default export is an array of `source` and `img` attributes which requires special handling (see `Image.vue` in the example), but support for simpler use cases for direct usage in HTML and Vue SFCs `img` and `source` tags will be added in the next version.
+You can also use the `src` and `srcset` query parameters for direct usage:
 
-Check the [example] for additional usage information, or [see it live][live].
+```js
+import srcset from '~/images/logo.jpg?preset=thumbnail&srcset'
+
+expect(srcset).toEqual('/assets/logo.063759b1.jpeg 48w, /assets/logo.81d93491.jpeg 96w')
+
+
+import src from '~/images/logo.jpg?preset=thumbnail&src'
+
+expect(src).toEqual('/assets/logo.81d93491.jpeg')
+```
+
+Check the [example] for additional usage information and different preset examples, or [see it live][live].
 
 More documentation coming soon, in [îles].
 

@@ -56,8 +56,8 @@ export function createImageApi (config: Config) {
         fs.rm(resolve(config.cacheDir, file), { force: true })
       })
     },
-    async resolveImage (filename: string, params: Record<string, any>): Promise<string | ImageAttrs[]> {
-      const { [config.urlParam]: presetName, srcset, otherParams } = params
+    async resolveImage (filename: string, params: Record<string, any>): Promise<undefined | string | ImageAttrs[]> {
+      const { [config.urlParam]: presetName, src, srcset, otherParams } = params
       const preset = config.presets[presetName]
 
       debug.load('%O %s', params, filename)
@@ -65,7 +65,7 @@ export function createImageApi (config: Config) {
       if (!preset)
         throw new Error(`vite-image-presets: Unknown image preset '${presetName}'`)
 
-      let lastSrc
+      let lastSrc: string | undefined
       const imagesAttrs: ImageAttrs[] = await Promise.all(
         preset.images.map(async ({ srcset, ...source }) => ({
           ...source,
@@ -80,15 +80,19 @@ export function createImageApi (config: Config) {
         })),
       )
 
-      const lastImage = imagesAttrs[imagesAttrs.length - 1]
+      // Allow direct usage in `img` and `source` src and srcset
+      if (src !== undefined)
+        return lastSrc
 
-      // Allow direct usage in `img` and `source` srcset
       if (srcset !== undefined) {
-        console.log({ imagesAttrs })
-        return lastImage.srcset!
+        const attrs = imagesAttrs[srcset === '' ? imagesAttrs.length - 1 : Number(srcset)]
+        if (!attrs)
+          throw new Error(`The '${presetName}' image preset did not provide any source matching the provided index: ${srcset}.\nURL: ${filename}?${new URLSearchParams(params)}`)
+        return attrs.srcset
       }
 
       // Set the attrs for the img element.
+      const lastImage = imagesAttrs[imagesAttrs.length - 1]
       Object.assign(lastImage, preset.attrs)
       lastImage.src ||= lastSrc
 

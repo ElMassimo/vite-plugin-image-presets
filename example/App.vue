@@ -8,7 +8,11 @@ import fullImage from '@images/vite-ruby.png?preset=full'
   <main>
     <h1>
       <ExternalLink href="https://github.com/ElMassimo/vite-plugin-image-presets">
-        <img srcset="@images/logo.svg?preset=thumbnail&srcset" height="48"/>
+        <img
+          srcset="@images/logo.svg?preset=thumbnail&srcset"
+          src="@images/logo.svg?preset=thumbnail&src"
+          height="48"
+        />
         <p style="margin-top: 0"><code>vite-plugin-image-presets</code></p>
       </ExternalLink>
     </h1>
