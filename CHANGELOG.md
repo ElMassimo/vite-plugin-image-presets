@@ -1,3 +1,19 @@
+# [0.3.0](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.2.0...v0.3.0) (2022-01-14)
+
+
+### Bug Fixes
+
+* handle unexpected errors without crashing the vite server ([e174936](https://github.com/ElMassimo/vite-plugin-image-presets/commit/e1749363dbb4b5a984e48815f35ee5043f582f30))
+* remove undefined and null attrs ([e3cf8e7](https://github.com/ElMassimo/vite-plugin-image-presets/commit/e3cf8e71fbd431e84e6dc008f8e6bb8ca293b888))
+
+
+### Features
+
+* add `src` query param support and allow `srcset` to specify an index ([53396c6](https://github.com/ElMassimo/vite-plugin-image-presets/commit/53396c611dccdfe94e686da7b35c229fbec15022))
+* add `srcset` param for direct usage (close [#2](https://github.com/ElMassimo/vite-plugin-image-presets/issues/2)) ([7660af4](https://github.com/ElMassimo/vite-plugin-image-presets/commit/7660af402596e96b0679996b8831c7087a1a4106))
+
+
+
 # [0.2.0](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.1.1...v0.2.0) (2022-01-12)
 
 
