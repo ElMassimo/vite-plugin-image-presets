@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs'
 import type { Plugin } from 'vite'
-import { join, resolve } from 'pathe'
+import { join } from 'pathe'
 import serialize from '@nuxt/devalue'
 
 import type { Config, Options, ImageApi, ImagePresets } from './types'
@@ -75,7 +75,7 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
     async generateBundle (_, output) {
       if (config.writeToBundle) {
         const images = await api.waitForImages()
-        images.forEach(asset => { output[asset.fileName] = asset })
+        images.forEach((asset) => { output[asset.fileName] = asset })
         api.purgeCache(images)
       }
     },

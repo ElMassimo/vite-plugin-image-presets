@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest'
 import { formatFor, formatPreset, densityPreset, widthPreset } from 'vite-plugin-image-presets'
 import sharp from 'sharp'
 
-const imagePath = resolve(__dirname, '../example/images/logo.png')
+export const imagePath = resolve(__dirname, '../example/images/logo.png')
 
 describe('formatPreset', () => {
   test('attrs and images', async () => {
@@ -22,12 +22,12 @@ describe('formatPreset', () => {
 
     expect(avifImage.type).toEqual('image/avif')
     expect(avifImage.srcset.length).toEqual(1)
-    const { args: avifArgs, condition: avifCondition, generate: generateAvif } = avifImage.srcset[0]
+    const { condition: avifCondition } = avifImage.srcset[0]
     expect(avifCondition).toEqual(undefined)
 
     expect(originalImage.type).toEqual(undefined)
     expect(originalImage.srcset.length).toEqual(1)
-    const { args: originalArgs, condition: originalCondition, generate: generateOriginal } = originalImage.srcset[0]
+    const { condition: originalCondition } = originalImage.srcset[0]
     expect(originalCondition).toEqual(undefined)
   })
 })

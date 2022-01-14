@@ -1,7 +1,7 @@
+import { promises as fs } from 'fs'
 import type { OutputAsset } from 'rollup'
 
-import { promises as fs } from 'fs'
-import { basename, join, resolve, relative, extname } from 'pathe'
+import { basename, join, resolve, extname } from 'pathe'
 import createDebugger from 'debug'
 import type { Config, Image, ImageAttrs, ImageGenerator, ImageGeneratorArgs } from './types'
 
@@ -37,7 +37,7 @@ export function createImageApi (config: Config) {
       return await Promise.all(generatedImages)
     },
     async writeImages (outDir: string) {
-      const images = await Promise.all(generatedImages.map(async imagePromise => {
+      const images = await Promise.all(generatedImages.map(async (imagePromise) => {
         const image = await imagePromise
         fs.writeFile(join(outDir, image.fileName), image.source)
         return image
@@ -52,7 +52,7 @@ export function createImageApi (config: Config) {
       const cachedFiles = await fs.readdir(config.cacheDir)
       const unusedFiles = cachedFiles.filter(file => !usedFiles.has(file))
       debug.cache('%i unused files', unusedFiles.length)
-      unusedFiles.forEach(file => {
+      unusedFiles.forEach((file) => {
         fs.rm(resolve(config.cacheDir, file), { force: true })
       })
     },
@@ -125,7 +125,7 @@ export function createImageApi (config: Config) {
     }
 
     return {
-      fileName: join(config.assetsDir, filename),
+      fileName: join(assetsDir, filename),
       name: filename,
       source: await fs.readFile(cachedFilename) as any,
       isAsset: true,

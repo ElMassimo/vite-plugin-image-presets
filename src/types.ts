@@ -1,6 +1,5 @@
 import type {
   Sharp,
-  OutputOptions,
   AvifOptions,
   GifOptions,
   HeifOptions,

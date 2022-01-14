@@ -26,9 +26,9 @@ export async function exists (path: string) {
 
 export async function formatFor (image: Image): Promise<ImageFormat> {
   let format = (image as any).options?.formatOut
-  if (format === 'input') {
+  if (format === 'input')
     format = (await image.metadata()).format
-  }
+
   if (!format) {
     console.error('Could not infer image format for', image)
     throw new Error('Could not infer image format')
