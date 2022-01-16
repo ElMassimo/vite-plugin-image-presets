@@ -1,3 +1,13 @@
+## [0.3.1](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.3.0...v0.3.1) (2022-01-16)
+
+
+### Bug Fixes
+
+* ensure src is deterministic, always take the last ([6579611](https://github.com/ElMassimo/vite-plugin-image-presets/commit/65796117cd67f82241f7741343f8d21894fcb29b))
+* pass additional parameters as args to the generate fn ([053da5d](https://github.com/ElMassimo/vite-plugin-image-presets/commit/053da5dffbbaaf585adda954140a8466f9b23638))
+
+
+
 # [0.3.0](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.2.0...v0.3.0) (2022-01-14)
 
 
