@@ -51,10 +51,6 @@ import fullImage from '@images/vite-ruby.png?preset=full'
 </template>
 
 <style>
-* {
-  transition: all 0.3s ease;
-}
-
 body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -78,6 +74,10 @@ main a {
   text-decoration: none;
 }
 
+h1 {
+  margin-bottom: 4rem;
+}
+
 @media (max-width: 440px) {
   h1 {
     font-size: 1.2rem;
@@ -88,9 +88,5 @@ main a {
   margin-top: 1.5rem;
   max-height: 100vh;
   max-width: min(700px, 100%);
-}
-
-h2 {
-  margin-top: 3rem;
 }
 </style>
