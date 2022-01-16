@@ -5,7 +5,7 @@ import { basename, join, resolve, extname } from 'pathe'
 import createDebugger from 'debug'
 import type { Config, Image, ImageAttrs, ImageGenerator, ImageGeneratorArgs } from './types'
 
-import { exists, generateImageID, formatFor, getAssetHash, loadImage } from './utils'
+import { exists, extractSrc, generateImageID, formatFor, getAssetHash, last, loadImage } from './utils'
 
 const debug = {
   load: createDebugger('image-presets:load'),
@@ -37,6 +37,7 @@ export function createImageApi (config: Config) {
       return await Promise.all(generatedImages)
     },
     async writeImages (outDir: string) {
+      debug.total('%i image(s)', generatedImages.length)
       const images = await Promise.all(generatedImages.map(async (imagePromise) => {
         const image = await imagePromise
         fs.writeFile(join(outDir, image.fileName), image.source)
@@ -65,14 +66,13 @@ export function createImageApi (config: Config) {
       if (!preset)
         throw new Error(`vite-image-presets: Unknown image preset '${presetName}'`)
 
-      let lastSrc: string | undefined
       const imagesAttrs: ImageAttrs[] = await Promise.all(
         preset.images.map(async ({ srcset, ...source }) => ({
           ...source,
           srcset: (
             await Promise.all(
               srcset.map(async ({ condition, args, generate }) => [
-                lastSrc = await getImageSrc(filename, { ...args, ...otherParams }, generate),
+                await getImageSrc(filename, { ...args, ...otherParams }, generate),
                 condition,
               ].filter(x => x).join(' ')),
             )
@@ -81,6 +81,8 @@ export function createImageApi (config: Config) {
       )
 
       // Allow direct usage in `img` and `source` src and srcset
+      const lastImage = last(imagesAttrs)
+      const lastSrc = extractSrc(lastImage.srcset)
       if (src !== undefined)
         return lastSrc
 
@@ -92,7 +94,6 @@ export function createImageApi (config: Config) {
       }
 
       // Set the attrs for the img element.
-      const lastImage = imagesAttrs[imagesAttrs.length - 1]
       Object.assign(lastImage, preset.attrs)
       lastImage.src ||= lastSrc
 

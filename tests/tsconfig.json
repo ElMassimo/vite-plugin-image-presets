@@ -9,6 +9,9 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "baseUrl": ".",
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "paths": {
+      "@plugin/*": ["../src/*"]
+    }
   }
 }

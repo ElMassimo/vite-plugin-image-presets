@@ -19,6 +19,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@images': resolve(__dirname, 'images'),
+      '@plugin': resolve(__dirname, '../src'),
     },
   },
   plugins: [

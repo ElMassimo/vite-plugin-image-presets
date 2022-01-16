@@ -8,7 +8,10 @@
     "strictNullChecks": true,
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@plugin/*": ["./src/*"]
+    }
   },
   "exclude": [
     "**/dist",

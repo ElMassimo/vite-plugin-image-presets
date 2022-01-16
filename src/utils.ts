@@ -43,12 +43,6 @@ export function mimeTypeFor (format: ImageFormat | 'original') {
   return `image/${format}`
 }
 
-export function groupBy<T> (items: T[], key: keyof T): Record<string, T[]> {
-  const result: Record<string, T[]> = {}
-  items.forEach(item => (result[item[key] as any] ||= []).push(item))
-  return result
-}
-
 // Internal: Removes any keys with undefined or null values from the object.
 export function cleanObject<T extends Record<string, any>> (object: T): T {
   Object.keys(object).forEach((key) => {
@@ -62,4 +56,13 @@ export function cleanObject<T extends Record<string, any>> (object: T): T {
 // Internal: Returns true if the specified value is a plain JS object
 export function isObject (value: unknown): value is Record<string, any> {
   return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+export function last <T> (arr: T[]) {
+  return arr[arr.length - 1]
+}
+
+// Internal: Returns the last URL in a srcset.
+export function extractSrc (srcset: undefined | string) {
+  return srcset ? last(srcset.split(', ')).split(' ')[0] : ''
 }
