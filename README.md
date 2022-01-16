@@ -98,7 +98,11 @@ expect(src).toEqual('/assets/logo.81d93491.jpeg')
 
 Check the [example] for additional usage information and different preset examples, or [see it live][live].
 
-More documentation coming soon, in [îles].
+## Documentation 📖
+
+Additional usage documentation coming soon.
+
+In the meantime, check the [`@islands/images`](https://github.com/ElMassimo/iles/tree/main/packages/images) module for [îles].
 
 ## Acknowledgements
 
