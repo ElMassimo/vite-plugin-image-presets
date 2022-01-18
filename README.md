@@ -114,4 +114,4 @@ The `hdPreset` is based on the following article by Jake Archibald:
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+This library is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
