@@ -107,6 +107,7 @@ In the meantime, check the [`@islands/images`](https://github.com/ElMassimo/iles
 ## Acknowledgements
 
 - [sharp][sharp]: High performance Node.js image processing
+- [vite-imagetools](https://github.com/JonasKruckenberg/imagetools/tree/main/packages/vite): The middleware used in development is based on this nice library.
 
 The `hdPreset` is based on the following article by Jake Archibald:
 
