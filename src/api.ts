@@ -72,7 +72,7 @@ export function createImageApi (config: Config) {
           srcset: (
             await Promise.all(
               srcset.map(async ({ condition, args, generate }) => [
-                await getImageSrc(filename, { ...args, ...otherParams }, generate),
+                encodeURI(await getImageSrc(filename, { ...args, ...otherParams }, generate)),
                 condition,
               ].filter(x => x).join(' ')),
             )
