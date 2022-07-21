@@ -1,6 +1,6 @@
 import { resolve } from 'pathe'
-import { describe, test, expect } from 'vitest'
-import { formatFor, formatPreset, densityPreset, widthPreset } from 'vite-plugin-image-presets'
+import { describe, expect, test } from 'vitest'
+import { densityPreset, formatFor, formatPreset, widthPreset } from 'vite-plugin-image-presets'
 import sharp from 'sharp'
 
 export const imagePath = resolve(__dirname, '../example/images/logo.png')

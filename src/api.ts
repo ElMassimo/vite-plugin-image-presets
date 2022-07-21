@@ -1,11 +1,11 @@
 import { promises as fs } from 'fs'
 import type { OutputAsset } from 'rollup'
 
-import { basename, join, resolve, extname } from 'pathe'
+import { basename, extname, join, resolve } from 'pathe'
 import createDebugger from 'debug'
 import type { Config, Image, ImageAttrs, ImageGenerator, ImageGeneratorArgs } from './types'
 
-import { exists, extractSrc, generateImageID, formatFor, getAssetHash, last, loadImage } from './utils'
+import { exists, extractSrc, formatFor, generateImageID, getAssetHash, last, loadImage } from './utils'
 
 const debug = {
   load: createDebugger('image-presets:load'),

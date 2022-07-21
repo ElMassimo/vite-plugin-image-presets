@@ -42,7 +42,7 @@ Add it to your plugins in `vite.config.ts`
 
 ```ts
 import { defineConfig } from 'vite'
-import imagePresets, { widthPreset } from 'vite-plugin-image-presets' 
+import imagePresets, { widthPreset } from 'vite-plugin-image-presets'
 
 export default defineConfig({
   plugins: [
@@ -87,12 +87,9 @@ You can also use the `src` and `srcset` query parameters for direct usage:
 
 ```js
 import srcset from '~/images/logo.jpg?preset=thumbnail&srcset'
-
-expect(srcset).toEqual('/assets/logo.063759b1.jpeg 48w, /assets/logo.81d93491.jpeg 96w')
-
-
 import src from '~/images/logo.jpg?preset=thumbnail&src'
 
+expect(srcset).toEqual('/assets/logo.063759b1.jpeg 48w, /assets/logo.81d93491.jpeg 96w')
 expect(src).toEqual('/assets/logo.81d93491.jpeg')
 ```
 

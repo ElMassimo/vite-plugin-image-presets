@@ -1,5 +1,5 @@
 import type { ResizeOptions } from 'sharp'
-import type { ImageAttrs, ImageGenerator, ImageFormat, ImageFormats, ImagePreset, ImageSource } from './types'
+import type { ImageAttrs, ImageFormat, ImageFormats, ImageGenerator, ImagePreset, ImageSource } from './types'
 import { cleanObject, mimeTypeFor } from './utils'
 
 type FormatOptions = ImageFormats & { original?: {} }

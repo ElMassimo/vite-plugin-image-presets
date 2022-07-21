@@ -33,13 +33,16 @@ export async function formatFor (image: Image): Promise<ImageFormat> {
     console.error('Could not infer image format for', image)
     throw new Error('Could not infer image format')
   }
-  if (format === 'heif') return 'avif'
+  if (format === 'heif')
+    return 'avif'
   return format
 }
 
 export function mimeTypeFor (format: ImageFormat | 'original') {
-  if (format === 'original') return undefined
-  if (format === 'jpg') format = 'jpeg'
+  if (format === 'original')
+    return undefined
+  if (format === 'jpg')
+    format = 'jpeg'
   return `image/${format}`
 }
 
@@ -47,8 +50,10 @@ export function mimeTypeFor (format: ImageFormat | 'original') {
 export function cleanObject<T extends Record<string, any>> (object: T): T {
   Object.keys(object).forEach((key) => {
     const value = object[key]
-    if (value === undefined || value === null) delete object[key]
-    else if (isObject(value)) cleanObject(value)
+    if (value === undefined || value === null)
+      delete object[key]
+    else if (isObject(value))
+      cleanObject(value)
   })
   return object
 }

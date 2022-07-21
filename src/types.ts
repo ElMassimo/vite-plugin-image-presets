@@ -1,14 +1,14 @@
 import type {
-  Sharp,
   AvifOptions,
   GifOptions,
   HeifOptions,
   JpegOptions,
   PngOptions,
+  Sharp,
   TiffOptions,
   WebpOptions,
 } from 'sharp'
-import { createImageApi } from './api'
+import type { createImageApi } from './api'
 
 export type ImageApi = ReturnType<typeof createImageApi>
 

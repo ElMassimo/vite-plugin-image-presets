@@ -3,9 +3,9 @@ import type { Plugin } from 'vite'
 import { join } from 'pathe'
 import serialize from '@nuxt/devalue'
 
-import type { Config, Options, ImageApi, ImagePresets } from './types'
+import type { Config, ImageApi, ImagePresets, Options } from './types'
 import { formatFor } from './utils'
-import { createImageApi, VIRTUAL_ID } from './api'
+import { VIRTUAL_ID, createImageApi } from './api'
 
 export * from './types'
 export * from './presets'
@@ -21,7 +21,8 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
     enforce: 'pre',
     get api () { return api },
     async configResolved ({ base, command, root, build: { assetsDir } }) {
-      if (api) return // NOTE: When reusing plugins for SSR build.
+      if (api)
+        return // NOTE: When reusing plugins for SSR build.
 
       config = {
         presets: presets!,
@@ -41,10 +42,12 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
         await fs.mkdir(config.cacheDir, { recursive: true })
     },
     async load (id) {
-      if (!id.includes(config.urlParam)) return
+      if (!id.includes(config.urlParam))
+        return
 
       const { path, query } = parseId(id)
-      if (!query.preset) return
+      if (!query.preset)
+        return
 
       const images = await api.resolveImage(path, query)
       return `export default ${serialize(images)}`
@@ -84,9 +87,9 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
 
 function parseId (id: string) {
   const index = id.indexOf('?')
-  if (index < 0) return { path: id, query: {} }
+  if (index < 0)
+    return { path: id, query: {} }
 
-  // @ts-ignore
   const query = Object.fromEntries(new URLSearchParams(id.slice(index)))
   return { path: id.slice(0, index), query }
 }
