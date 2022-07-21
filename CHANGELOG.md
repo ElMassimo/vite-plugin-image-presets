@@ -1,3 +1,17 @@
+## [0.3.2](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.3.1...v0.3.2) (2022-07-21)
+
+
+### Bug Fixes
+
+* escape srcset ([#8](https://github.com/ElMassimo/vite-plugin-image-presets/issues/8)) ([3b2ac77](https://github.com/ElMassimo/vite-plugin-image-presets/commit/3b2ac773ba4a23ced47d7d07757b932b9bdb738f))
+
+
+### Features
+
+* loosen deps to allow more recent versions of dependencies ([3e3e94a](https://github.com/ElMassimo/vite-plugin-image-presets/commit/3e3e94a58c9b1b06c2ba14806f028d12f518269f))
+
+
+
 ## [0.3.1](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.3.0...v0.3.1) (2022-01-16)
 
 

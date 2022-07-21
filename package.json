@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-image-presets",
   "type": "module",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Image Presets for Vite.js apps. Optimize, resize, and process images consistently and with ease.",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "license": "MIT",
@@ -78,7 +78,10 @@
       "@antfu/eslint-config"
     ],
     "rules": {
-      "@typescript-eslint/space-before-function-paren": ["warn", "always"]
+      "@typescript-eslint/space-before-function-paren": [
+        "warn",
+        "always"
+      ]
     },
     "globals": {
       "$ref": "readonly",
