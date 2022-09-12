@@ -52,13 +52,13 @@
     "@nuxt/devalue": "^2.0",
     "debug": "^4.3",
     "pathe": "^0.2",
-    "sharp": "^0.29"
+    "sharp": "^0.30.5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "*",
     "@types/debug": "^4.1.7",
     "@types/node": "^14.18.22",
-    "@types/sharp": "^0.29.5",
+    "@types/sharp": "^0.30.5",
     "conventional-changelog-cli": "^2.2.2",
     "cross-spawn": "^7.0.3",
     "enquirer": "^2.3.6",
