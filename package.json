@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-image-presets",
   "type": "module",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Image Presets for Vite.js apps. Optimize, resize, and process images consistently and with ease.",
   "author": "Máximo Mussini <maximomussini@gmail.com>",
   "license": "MIT",
