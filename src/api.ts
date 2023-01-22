@@ -98,7 +98,9 @@ export function createImageApi (config: Config) {
       lastImage.src ||= lastSrc
 
       if (preset.dimensions) {
-        const { width, height } = await loadImage(filename).metadata()
+        const id = lastSrc.slice(VIRTUAL_ID.length)
+        const lastSharp = await requestedImagesById[id]
+        const { info: { width, height } } = await lastSharp.toBuffer({ resolveWithObject: true })
         lastImage.width ||= width
         lastImage.height ||= height
       }
