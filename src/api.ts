@@ -97,6 +97,12 @@ export function createImageApi (config: Config) {
       Object.assign(lastImage, preset.attrs)
       lastImage.src ||= lastSrc
 
+      if (preset.dimensions) {
+        const { width, height } = await loadImage(filename).metadata()
+        lastImage.width ||= width
+        lastImage.height ||= height
+      }
+
       return imagesAttrs
     },
   }

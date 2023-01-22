@@ -11,6 +11,7 @@ interface WidthPresetOptions extends ImageAttrs {
   resizeOptions?: ResizeOptions
   withImage?: ImageGenerator
   media?: string
+  dimensions?: boolean
 }
 
 export { mimeTypeFor }
@@ -23,13 +24,14 @@ export function hdPreset (options: WidthPresetOptions) {
   const highDensity = widthPreset({ density: 2, media: '(-webkit-min-device-pixel-ratio: 1.5)', ...options })
   const desktopWidth = Math.max(...options.widths as any) || 'original'
   const desktop = widthPreset({ ...options, widths: [desktopWidth] })
-  return { attrs: desktop.attrs, images: highDensity.images.concat(desktop.images) }
+  return { attrs: desktop.attrs, images: highDensity.images.concat(desktop.images), dimensions: options.dimensions }
 }
 
-export function widthPreset ({ density, widths, formats, resizeOptions, withImage, ...options }: WidthPresetOptions): ImagePreset {
+export function widthPreset ({ density, widths, formats, resizeOptions, withImage, dimensions, ...options }: WidthPresetOptions): ImagePreset {
   const [attrs, sourceAttrs] = extractSourceAttrs(options)
   return {
     attrs,
+    dimensions,
     images: Object.entries(formats)
       .map(([format, formatOptions]) => ({
         ...sourceAttrs,
@@ -61,16 +63,18 @@ interface DensityPresetOptions extends ImageAttrs {
   resizeOptions?: ResizeOptions
   withImage?: ImageGenerator
   media?: string
+  dimensions?: boolean
 }
 
 function multiply (quantity: number, n?: number | undefined) {
   return n ? quantity * n : undefined
 }
 
-export function densityPreset ({ baseWidth, baseHeight, density, formats, resizeOptions, withImage, ...options }: DensityPresetOptions): ImagePreset {
+export function densityPreset ({ baseWidth, baseHeight, density, formats, resizeOptions, withImage, dimensions, ...options }: DensityPresetOptions): ImagePreset {
   const [attrs, sourceAttrs] = extractSourceAttrs(options)
   return {
     attrs,
+    dimensions,
     images: Object.entries(formats)
       .map(([format, formatOptions]) => ({
         ...sourceAttrs,
