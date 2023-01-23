@@ -14,10 +14,10 @@ async function getResolvedImage (preset: ImagePreset, isBuild: boolean) {
   return plugin.api.resolveImage('assets/white.png', { preset: 'default' })
 }
 
-describe('dimensions', () => {
+describe('inferDimensions', () => {
   test('original width and height', async () => {
     const resolved = await getResolvedImage(formatPreset({
-      dimensions: true,
+      inferDimensions: true,
       formats: {
         webp: { quality: 70 },
         original: {},
@@ -29,7 +29,7 @@ describe('dimensions', () => {
 
   test('original width and height in production build', async () => {
     const resolved = await getResolvedImage(formatPreset({
-      dimensions: true,
+      inferDimensions: true,
       formats: {
         webp: { quality: 70 },
         original: {},
@@ -41,7 +41,7 @@ describe('dimensions', () => {
 
   test('scaled width and height', async () => {
     const resolved = await getResolvedImage(widthPreset({
-      dimensions: true,
+      inferDimensions: true,
       widths: [4, 2],
       formats: {
         webp: { quality: 70 },
@@ -53,7 +53,7 @@ describe('dimensions', () => {
 
   test('overriden by attrs', async () => {
     const resolved = await getResolvedImage(formatPreset({
-      dimensions: true,
+      inferDimensions: true,
       height: 20,
       formats: {
         original: {},
@@ -63,9 +63,9 @@ describe('dimensions', () => {
     expect(resolved[0]).toHaveProperty('height', 20)
   })
 
-  test('dimensions = false', async () => {
+  test('inferDimensions = false', async () => {
     const resolved = await getResolvedImage(formatPreset({
-      dimensions: false,
+      inferDimensions: false,
       formats: {
         original: {},
       },
@@ -74,7 +74,7 @@ describe('dimensions', () => {
     expect(resolved[0]).not.toHaveProperty('height')
   })
 
-  test('dimensions undefined', async () => {
+  test('inferDimensions undefined', async () => {
     const resolved = await getResolvedImage(formatPreset({
       formats: {
         original: {},
