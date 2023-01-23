@@ -1,3 +1,12 @@
+## [0.3.4](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.3.3...v0.3.4) (2023-01-23)
+
+
+### Features
+
+* add the inferDimensions option ([#18](https://github.com/ElMassimo/vite-plugin-image-presets/issues/18)) ([a3269f9](https://github.com/ElMassimo/vite-plugin-image-presets/commit/a3269f9d820db3c6ebd947221927615bea30fcc4))
+
+
+
 ## [0.3.3](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.3.2...v0.3.3) (2022-10-27)
 
 
