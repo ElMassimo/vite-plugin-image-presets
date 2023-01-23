@@ -17,6 +17,7 @@ describe('formatPreset', () => {
 
     expect(preset.attrs).toEqual({})
     expect(preset.images.length).toEqual(2)
+    expect(preset.inferDimensions).toBeUndefined()
 
     const [avifImage, originalImage] = preset.images
 
@@ -42,10 +43,12 @@ describe('widthPreset', () => {
         webp: { quality: 70 },
         jpg: { quality: 80 },
       },
+      inferDimensions: true,
     })
 
     expect(preset.attrs).toEqual({ class: 'img', loading: 'lazy' })
     expect(preset.images.length).toEqual(2)
+    expect(preset.inferDimensions).toEqual(true)
 
     const [webpImage, jpegImage] = preset.images
 
@@ -75,10 +78,12 @@ describe('densityPreset', () => {
         webp: { quality: 70 },
         avif: { quality: 80 },
       },
+      inferDimensions: false,
     })
 
     expect(preset.attrs).toEqual({ loading: 'lazy' })
     expect(preset.images.length).toEqual(2)
+    expect(preset.inferDimensions).toEqual(false)
 
     const [webpImage, avifImage] = preset.images
 

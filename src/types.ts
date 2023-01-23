@@ -56,6 +56,7 @@ export interface ImageSource {
 
 export interface ImagePreset {
   attrs?: ImageAttrs
+  inferDimensions?: boolean
   images: ImageSource[]
 }
 export type ImagePresets = Record<string, ImagePreset>
