@@ -95,6 +95,7 @@ export interface Options {
 
 export interface Config extends Required<Options> {
   isBuild: boolean
+  command: string
   base: string
   root: string
 }
