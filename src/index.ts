@@ -21,7 +21,7 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
     enforce: 'pre',
     get api () { return api },
     async configResolved ({ base, command, root, build: { assetsDir } }) {
-      if (api)
+      if (api && config.command === command)
         return // NOTE: When reusing plugins for SSR build.
 
       config = {
@@ -33,6 +33,7 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
         cacheDir: join(root, 'node_modules', '.images'),
         purgeCache: true,
         writeToBundle: true,
+        command,
         isBuild: command === 'build',
         ...options,
       }
