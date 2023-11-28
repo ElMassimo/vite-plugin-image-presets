@@ -27,7 +27,12 @@ export interface ImageFormatOptions {
 export type ImageFormats = Partial<ImageFormatOptions>
 export type ImageFormat = keyof ImageFormatOptions
 
-export type ImageAttrs = Partial<HTMLImageElement> & { class?: string }
+export interface ImageAttrsAddons {
+  class?: string
+  placeholder?: string
+}
+
+export type ImageAttrs = Partial<HTMLImageElement> & ImageAttrsAddons
 
 export type ImageGeneratorArgs = Record<string, any>
 export type ImageGenerator = (image: Image, args: ImageGeneratorArgs) => Image | Promise<Image>
@@ -56,6 +61,7 @@ export interface ImageSource {
 
 export interface ImagePreset {
   attrs?: ImageAttrs
+  generateBlurryPlaceholder?: boolean
   inferDimensions?: boolean
   images: ImageSource[]
 }

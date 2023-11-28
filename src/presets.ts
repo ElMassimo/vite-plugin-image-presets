@@ -12,6 +12,7 @@ interface WidthPresetOptions extends ImageAttrs {
   withImage?: ImageGenerator
   media?: string
   inferDimensions?: boolean
+  generateBlurryPlaceholder?: boolean
 }
 
 export { mimeTypeFor }
@@ -24,14 +25,15 @@ export function hdPreset (options: WidthPresetOptions) {
   const highDensity = widthPreset({ density: 2, media: '(-webkit-min-device-pixel-ratio: 1.5)', ...options })
   const desktopWidth = Math.max(...options.widths as any) || 'original'
   const desktop = widthPreset({ ...options, widths: [desktopWidth] })
-  return { attrs: desktop.attrs, images: highDensity.images.concat(desktop.images), inferDimensions: options.inferDimensions }
+  return { attrs: desktop.attrs, images: highDensity.images.concat(desktop.images), inferDimensions: options.inferDimensions, generateBlurryPlaceholder: options.generateBlurryPlaceholder }
 }
 
-export function widthPreset ({ density, widths, formats, resizeOptions, withImage, inferDimensions, ...options }: WidthPresetOptions): ImagePreset {
+export function widthPreset ({ density, widths, formats, resizeOptions, withImage, inferDimensions, generateBlurryPlaceholder, ...options }: WidthPresetOptions): ImagePreset {
   const [attrs, sourceAttrs] = extractSourceAttrs(options)
   return {
     attrs,
     inferDimensions,
+    generateBlurryPlaceholder,
     images: Object.entries(formats)
       .map(([format, formatOptions]) => ({
         ...sourceAttrs,
@@ -64,17 +66,19 @@ interface DensityPresetOptions extends ImageAttrs {
   withImage?: ImageGenerator
   media?: string
   inferDimensions?: boolean
+  generateBlurryPlaceholder?: boolean
 }
 
 function multiply (quantity: number, n?: number | undefined) {
   return n ? quantity * n : undefined
 }
 
-export function densityPreset ({ baseWidth, baseHeight, density, formats, resizeOptions, withImage, inferDimensions, ...options }: DensityPresetOptions): ImagePreset {
+export function densityPreset ({ baseWidth, baseHeight, density, formats, resizeOptions, withImage, inferDimensions, generateBlurryPlaceholder, ...options }: DensityPresetOptions): ImagePreset {
   const [attrs, sourceAttrs] = extractSourceAttrs(options)
   return {
     attrs,
     inferDimensions,
+    generateBlurryPlaceholder,
     images: Object.entries(formats)
       .map(([format, formatOptions]) => ({
         ...sourceAttrs,
