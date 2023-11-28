@@ -44,11 +44,13 @@ describe('widthPreset', () => {
         jpg: { quality: 80 },
       },
       inferDimensions: true,
+      generateBlurryPlaceholder: false,
     })
 
     expect(preset.attrs).toEqual({ class: 'img', loading: 'lazy' })
     expect(preset.images.length).toEqual(2)
     expect(preset.inferDimensions).toEqual(true)
+    expect(preset.generateBlurryPlaceholder).toEqual(false)
 
     const [webpImage, jpegImage] = preset.images
 
@@ -79,11 +81,13 @@ describe('densityPreset', () => {
         avif: { quality: 80 },
       },
       inferDimensions: false,
+      generateBlurryPlaceholder: true,
     })
 
     expect(preset.attrs).toEqual({ loading: 'lazy' })
     expect(preset.images.length).toEqual(2)
     expect(preset.inferDimensions).toEqual(false)
+    expect(preset.generateBlurryPlaceholder).toEqual(true)
 
     const [webpImage, avifImage] = preset.images
 

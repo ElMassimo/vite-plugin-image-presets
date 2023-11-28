@@ -105,6 +105,17 @@ export function createImageApi (config: Config) {
         lastImage.height ||= height
       }
 
+      // Puts the placeholder on the last entry of the returned images array. This is based
+      // on the assumption, that in a multi-format scenario the last item will be the one
+      // that is being used in the image tag inside the picture group (as the included
+      // example does it).
+      if (preset.generateBlurryPlaceholder) {
+        const { args, generate } = last(last(preset.images).srcset)
+        const lastSharp = await generate(loadImage(resolve(config.root, filename)), args)
+        const placeholder = await lastSharp.resize(20).png().toBuffer()
+        lastImage.placeholder = `data:image/png;base64,${placeholder.toString('base64')}`
+      }
+
       return imagesAttrs
     },
   }

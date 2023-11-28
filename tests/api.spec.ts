@@ -84,3 +84,24 @@ describe('inferDimensions', () => {
     expect(resolved[0]).not.toHaveProperty('height')
   })
 })
+
+describe('generateBlurryPlaceholder', () => {
+  test('generate blurry placeholder', async () => {
+    const resolved = await getResolvedImage(formatPreset({
+      generateBlurryPlaceholder: true,
+      formats: {
+        original: {},
+      },
+    }), false)
+    expect(resolved[0]).toHaveProperty('placeholder', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAG0lEQVQokWP4TwFgGNVMGmAgUT0KGNX8nzQAAJmLzU+UoPoTAAAAAElFTkSuQmCC')
+  })
+
+  test('don’t generate blurry placeholder', async () => {
+    const resolved = await getResolvedImage(formatPreset({
+      formats: {
+        original: {},
+      },
+    }), false)
+    expect(resolved[0]).not.toHaveProperty('placeholder')
+  })
+})

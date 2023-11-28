@@ -51,6 +51,22 @@ export default defineConfig({
         class: 'img thumb',
         loading: 'lazy',
         widths: [48, 96],
+
+        // When set to true, the width and height of the image will be
+        // added as keys to the last image object on the returned array
+        // This is useful to prevent layout shifts from loading image
+        //
+        // Defaults to false
+        inferDimensions: true,
+
+        // When set to true a base64-inlined 20px wide version of the
+        // image will be added to the `placeholder` key of the last
+        // image in the returned array. This can be used to roll your
+        // own lazy loading, where a blurry version of the image is
+        // displayed until the real image loads in.
+        //
+        // Defaults to false
+        generateBlurryPlaceholder: true,
         formats: {
           webp: { quality: 50 },
           jpg: { quality: 70 },
@@ -79,6 +95,13 @@ expect(thumbnails).toEqual([
     src: '/assets/logo.81d93491.jpeg',
     class: 'img thumb',
     loading: 'lazy',
+
+    // If inferDimensions is set to true
+    width: 100,
+    height: 100,
+
+    // If generateBlurryPlaceholder is set to true
+    placeholder: 'data:image/png;base64,...'
   },
 ])
 ```
