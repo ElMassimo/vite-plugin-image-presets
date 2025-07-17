@@ -1,31 +1,39 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 jobs:
   build:
-    name: Test
+    name: Build, Lint & Test
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
-      - uses: pnpm/action-setup@v1.2.1
+      - uses: pnpm/action-setup@v2
         with:
-          version: 5.13.6
-          run_install: |
-            - recursive: false
+          version: 8
+          run_install: true
 
       - name: Build
         run: pnpm build
 
-      - name: Test
-        run: pnpm test
-
       - name: Lint
         run: pnpm lint
+
+      - name: Test
+        run: pnpm test
