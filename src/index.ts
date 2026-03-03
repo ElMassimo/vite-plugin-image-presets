@@ -79,12 +79,17 @@ export default function ImagePresetsPlugin (presets?: ImagePresets, options?: Op
       if (config.writeToBundle) {
         const images = await api.waitForImages()
         images.forEach((asset) => {
-          this.emitFile({
-            type: 'asset',
-            fileName: asset.fileName,
-            name: asset.name,
-            source: asset.source,
-          })
+          if (this.emitFile) {
+            this.emitFile({
+              type: 'asset',
+              fileName: asset.fileName,
+              name: asset.name,
+              source: asset.source,
+            })
+          }
+          else {
+            output[asset.fileName] = asset
+          }
         })
         api.purgeCache(images)
       }
