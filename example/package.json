@@ -5,17 +5,18 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "cross-env DEBUG=image-presets:* vite --open",
-    "build": "cross-env DEBUG=image-presets:* vite build --mode production",
-    "preview": "cross-env RAILS_ENV=production DEBUG=image-presets:* vite preview --open",
+    "dev": "cross-env DEBUG=image-presets:* vp dev --open",
+    "build": "cross-env DEBUG=image-presets:* vp build --mode production",
+    "preview": "cross-env RAILS_ENV=production DEBUG=image-presets:* vp preview --open",
     "now": "npm run build && npm run preview"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.1",
+    "@vitejs/plugin-vue": "^5",
     "cross-env": "^7.0.3",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.2",
+    "typescript": "^5",
+    "vite": "catalog:",
     "vite-plugin-image-presets": "workspace:*",
+    "vite-plus": "catalog:",
     "vue": "^3.2.37"
   }
 }

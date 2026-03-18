@@ -1,94 +1,78 @@
 {
   "name": "vite-plugin-image-presets",
-  "type": "module",
   "version": "0.3.4",
   "description": "Image Presets for Vite.js apps. Optimize, resize, and process images consistently and with ease.",
-  "author": "Máximo Mussini <maximomussini@gmail.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/ElMassimo/vite-plugin-image-presets",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElMassimo/vite-plugin-image-presets"
-  },
-  "bugs": "https://github.com/ElMassimo/vite-plugin-image-presets/issues",
   "keywords": [
-    "plugin",
-    "image",
-    "sharp",
-    "image-processing",
     "build",
+    "image",
+    "image-processing",
+    "plugin",
+    "sharp",
     "vite",
     "vite-plugin",
     "vitejs"
   ],
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
-    }
+  "homepage": "https://github.com/ElMassimo/vite-plugin-image-presets",
+  "bugs": "https://github.com/ElMassimo/vite-plugin-image-presets/issues",
+  "license": "MIT",
+  "author": "Máximo Mussini <maximomussini@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElMassimo/vite-plugin-image-presets"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
   "scripts": {
-    "lint": "eslint .",
-    "test": "vitest --config example/vite.config.ts",
-    "dev": "npm run build -- --watch",
+    "lint": "vp lint",
+    "test": "vp test",
+    "test:e2e": "playwright test",
+    "dev": "vp pack --dts --watch",
     "example": "npm -C example run dev",
     "example:build": "npm -C example run build",
     "example:now": "npm -C example run now",
-    "build": "tsup src/index.ts --dts --format cjs,esm --clean",
+    "build": "vp pack --dts",
     "release": "node scripts/release.cjs",
     "prepublishOnly": "npm run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
+    "prepare": "vp config"
   },
   "dependencies": {
     "@nuxt/devalue": "^2.0",
     "debug": "^4.3",
     "pathe": "^0.2",
-    "sharp": "^0.30.5"
+    "sharp": "^0.33"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "*",
+    "@playwright/test": "^1.58.2",
     "@types/debug": "^4.1.7",
-    "@types/node": "^14.18.22",
-    "@types/sharp": "^0.30.5",
+    "@types/node": "^22",
     "conventional-changelog-cli": "^2.2.2",
     "cross-spawn": "^7.0.3",
     "enquirer": "^2.3.6",
-    "eslint": "^8.20.0",
     "happy-dom": "^2.55.0",
     "minimist": "^1.2.6",
     "picocolors": "^1.0.0",
-    "rollup": "^2.77.0",
     "semver": "^7.3.7",
-    "tsup": "^6.1.3",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.2",
-    "vitest": "^0.18.1"
+    "vite": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   },
-  "eslintConfig": {
-    "extends": [
-      "@antfu/eslint-config"
-    ],
-    "rules": {
-      "@typescript-eslint/space-before-function-paren": [
-        "warn",
-        "always"
-      ]
-    },
-    "globals": {
-      "$ref": "readonly",
-      "$computed": "readonly",
-      "$shallowRef": "readonly",
-      "$$": "readonly",
-      "$": "readonly"
-    }
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
   }
 }
