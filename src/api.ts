@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 
 import { basename, extname, join, resolve } from 'node:path'
-import createDebugger from 'debug'
+import { createDebug } from 'obug'
 import type {
   Config,
   Image,
@@ -22,10 +22,10 @@ import {
 } from './utils'
 
 const debug = {
-  load: createDebugger('image-presets:load'),
-  write: createDebugger('image-presets:write'),
-  total: createDebugger('image-presets:total'),
-  cache: createDebugger('image-presets:cache'),
+  load: createDebug('image-presets:load'),
+  write: createDebug('image-presets:write'),
+  total: createDebug('image-presets:total'),
+  cache: createDebug('image-presets:cache'),
 }
 
 export const VIRTUAL_ID = '/@imagepresets/'
