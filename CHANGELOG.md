@@ -1,3 +1,9 @@
+## [0.3.5](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.3.4...v0.3.5) (2026-03-27)
+
+### Features
+
+- update to be compatible with rolldown ([c175d37](https://github.com/ElMassimo/vite-plugin-image-presets/commit/c175d37f74d007002290502517f8d3aaad266620))
+
 ## [0.3.4](https://github.com/ElMassimo/vite-plugin-image-presets/compare/v0.3.3...v0.3.4) (2023-01-23)
 
 ### Features
