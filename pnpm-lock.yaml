@@ -21,6 +21,12 @@ importers:
       '@nuxt/devalue':
         specifier: ^2.0
         version: 2.0.2
+      '@types/debug':
+        specifier: ^4.1.7
+        version: 4.1.12
+      '@types/node':
+        specifier: ^22
+        version: 22.19.15
       debug:
         specifier: ^4.3
         version: 4.4.3
@@ -30,16 +36,13 @@ importers:
       sharp:
         specifier: ^0.33
         version: 0.33.5
+      vite:
+        specifier: npm:@voidzero-dev/vite-plus-core@latest
+        version: '@voidzero-dev/vite-plus-core@0.1.12(@types/node@22.19.15)(typescript@5.9.3)(yaml@2.8.2)'
     devDependencies:
       '@playwright/test':
         specifier: ^1.58.2
         version: 1.58.2
-      '@types/debug':
-        specifier: ^4.1.7
-        version: 4.1.12
-      '@types/node':
-        specifier: ^22
-        version: 22.19.15
       conventional-changelog-cli:
         specifier: ^2.2.2
         version: 2.2.2
@@ -61,9 +64,6 @@ importers:
       semver:
         specifier: ^7.3.7
         version: 7.7.4
-      vite:
-        specifier: npm:@voidzero-dev/vite-plus-core@latest
-        version: '@voidzero-dev/vite-plus-core@0.1.12(@types/node@22.19.15)(typescript@5.9.3)(yaml@2.8.2)'
       vite-plus:
         specifier: 'catalog:'
         version: 0.1.12(@types/node@22.19.15)(@voidzero-dev/vite-plus-core@0.1.12(@types/node@22.19.15)(typescript@5.9.3)(yaml@2.8.2))(happy-dom@2.55.0)(typescript@5.9.3)(yaml@2.8.2)
