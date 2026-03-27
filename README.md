@@ -28,7 +28,7 @@
 This [Vite] plugin allows you to define presets for image processing using [Sharp],
 allowing you to optimize, resize, and process images consistently and with ease.
 
-[__Demo__ 🖼][live]
+[**Demo** 🖼][live]
 
 ## Installation 💿
 

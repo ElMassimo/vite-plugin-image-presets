@@ -1,17 +1,17 @@
-import { resolve } from "path";
-import { defineConfig } from "vite-plus";
+import { resolve } from 'path'
+import { defineConfig } from 'vite-plus'
 
 export default defineConfig({
   staged: {
-    "*": "vp check --fix",
+    '*': 'vp check --fix',
   },
   lint: { options: { typeAware: true, typeCheck: true } },
   resolve: {
     alias: {
-      "@plugin": resolve(import.meta.dirname, "src"),
+      '@plugin': resolve(import.meta.dirname, 'src'),
     },
   },
   test: {
-    exclude: ["e2e/**", "**/node_modules/**"],
+    exclude: ['e2e/**', '**/node_modules/**'],
   },
-});
+})

@@ -1,4 +1,4 @@
-import type { ResizeOptions } from "sharp";
+import type { ResizeOptions } from 'sharp'
 import type {
   ImageAttrs,
   ImageFormat,
@@ -6,40 +6,40 @@ import type {
   ImageGenerator,
   ImagePreset,
   ImageSource,
-} from "./types";
-import { cleanObject, mimeTypeFor } from "./utils";
+} from './types'
+import { cleanObject, mimeTypeFor } from './utils'
 
-type FormatOptions = ImageFormats & { original?: {} };
+type FormatOptions = ImageFormats & { original?: {} }
 
 interface WidthPresetOptions extends ImageAttrs {
-  density?: number;
-  widths: (number | "original")[];
-  formats: FormatOptions;
-  resizeOptions?: ResizeOptions;
-  withImage?: ImageGenerator;
-  media?: string;
-  inferDimensions?: boolean;
+  density?: number
+  widths: (number | 'original')[]
+  formats: FormatOptions
+  resizeOptions?: ResizeOptions
+  withImage?: ImageGenerator
+  media?: string
+  inferDimensions?: boolean
 }
 
-export { mimeTypeFor };
+export { mimeTypeFor }
 
-export function formatPreset(options: Omit<WidthPresetOptions, "widths">) {
-  return widthPreset({ widths: ["original"], ...options });
+export function formatPreset(options: Omit<WidthPresetOptions, 'widths'>) {
+  return widthPreset({ widths: ['original'], ...options })
 }
 
 export function hdPreset(options: WidthPresetOptions) {
   const highDensity = widthPreset({
     density: 2,
-    media: "(-webkit-min-device-pixel-ratio: 1.5)",
+    media: '(-webkit-min-device-pixel-ratio: 1.5)',
     ...options,
-  });
-  const desktopWidth = Math.max(...(options.widths as any)) || "original";
-  const desktop = widthPreset({ ...options, widths: [desktopWidth] });
+  })
+  const desktopWidth = Math.max(...(options.widths as any)) || 'original'
+  const desktop = widthPreset({ ...options, widths: [desktopWidth] })
   return {
     attrs: desktop.attrs,
     images: highDensity.images.concat(desktop.images),
     inferDimensions: options.inferDimensions,
-  };
+  }
 }
 
 export function widthPreset({
@@ -51,7 +51,7 @@ export function widthPreset({
   inferDimensions,
   ...options
 }: WidthPresetOptions): ImagePreset {
-  const [attrs, sourceAttrs] = extractSourceAttrs(options);
+  const [attrs, sourceAttrs] = extractSourceAttrs(options)
   return {
     attrs,
     inferDimensions,
@@ -60,37 +60,37 @@ export function widthPreset({
       type: mimeTypeFor(format as ImageFormat),
       srcset: widths.map((width) =>
         cleanObject({
-          condition: width === "original" ? undefined : `${width}w`,
-          args: { preset: "width", format, width, density, formatOptions, resizeOptions },
+          condition: width === 'original' ? undefined : `${width}w`,
+          args: { preset: 'width', format, width, density, formatOptions, resizeOptions },
           generate: async (image, args) => {
-            if (format !== "original") image = image.toFormat(format as ImageFormat, formatOptions);
+            if (format !== 'original') image = image.toFormat(format as ImageFormat, formatOptions)
 
-            if (width !== "original") {
-              const hdWidth = density ? width * density : width;
-              image = image.resize({ width: hdWidth, withoutEnlargement: true, ...resizeOptions });
+            if (width !== 'original') {
+              const hdWidth = density ? width * density : width
+              image = image.resize({ width: hdWidth, withoutEnlargement: true, ...resizeOptions })
             }
 
-            return (await withImage?.(image, args)) || image;
+            return (await withImage?.(image, args)) || image
           },
         }),
       ),
     })),
-  };
+  }
 }
 
 interface DensityPresetOptions extends ImageAttrs {
-  density: number[];
-  baseHeight?: number;
-  baseWidth?: number;
-  formats: FormatOptions;
-  resizeOptions?: ResizeOptions;
-  withImage?: ImageGenerator;
-  media?: string;
-  inferDimensions?: boolean;
+  density: number[]
+  baseHeight?: number
+  baseWidth?: number
+  formats: FormatOptions
+  resizeOptions?: ResizeOptions
+  withImage?: ImageGenerator
+  media?: string
+  inferDimensions?: boolean
 }
 
 function multiply(quantity: number, n?: number) {
-  return n ? quantity * n : undefined;
+  return n ? quantity * n : undefined
 }
 
 export function densityPreset({
@@ -103,7 +103,7 @@ export function densityPreset({
   inferDimensions,
   ...options
 }: DensityPresetOptions): ImagePreset {
-  const [attrs, sourceAttrs] = extractSourceAttrs(options);
+  const [attrs, sourceAttrs] = extractSourceAttrs(options)
   return {
     attrs,
     inferDimensions,
@@ -114,7 +114,7 @@ export function densityPreset({
         cleanObject({
           condition: `${density}x`,
           args: {
-            preset: "density",
+            preset: 'density',
             format,
             density,
             baseWidth,
@@ -123,7 +123,7 @@ export function densityPreset({
             resizeOptions,
           },
           generate: async (image, args) => {
-            if (format !== "original") image = image.toFormat(format as ImageFormat, formatOptions);
+            if (format !== 'original') image = image.toFormat(format as ImageFormat, formatOptions)
 
             if (baseWidth || baseHeight) {
               image = image.resize({
@@ -131,15 +131,15 @@ export function densityPreset({
                 height: multiply(density, baseHeight),
                 withoutEnlargement: true,
                 ...resizeOptions,
-              });
+              })
             }
 
-            return (await withImage?.(image, args)) || image;
+            return (await withImage?.(image, args)) || image
           },
         }),
       ),
     })),
-  };
+  }
 }
 
 export function extractSourceAttrs({
@@ -147,5 +147,5 @@ export function extractSourceAttrs({
   sizes,
   ...attrs
 }: any): [ImageAttrs, Partial<ImageSource>] {
-  return [cleanObject({ loading: "lazy", ...attrs }), cleanObject({ media, sizes })];
+  return [cleanObject({ loading: 'lazy', ...attrs }), cleanObject({ media, sizes })]
 }

@@ -40,7 +40,7 @@ const versionIncrements = [
 /**
  * @param {import('semver').ReleaseType} i
  */
-function inc (i) {
+function inc(i) {
   return semver.inc(pkg.version, i)
 }
 
@@ -49,7 +49,7 @@ function inc (i) {
  * @param {string[]} args
  * @param {object} opts
  */
-function run (bin, args, opts = {}) {
+function run(bin, args, opts = {}) {
   return spawn.sync(bin, args, { stdio: 'inherit', ...opts })
 }
 
@@ -58,25 +58,25 @@ function run (bin, args, opts = {}) {
  * @param {string[]} args
  * @param {object} opts
  */
-function dryRun (bin, args, opts = {}) {
+function dryRun(bin, args, opts = {}) {
   console.log(colors.blue(`[dryrun] ${bin} ${args.join(' ')}`), opts)
 }
 
 /**
  * @param {string} msg
  */
-function step (msg) {
+function step(msg) {
   console.log(colors.cyan(msg))
 }
 
 /**
  * @param {string} paths
  */
-function resolve (paths) {
+function resolve(paths) {
   return path.resolve(__dirname, `../${paths}`)
 }
 
-function jsPackage () {
+function jsPackage() {
   const path = resolve('package.json')
   const content = fs.readFileSync(path, 'utf-8')
   return {
@@ -84,14 +84,14 @@ function jsPackage () {
     path,
     content,
     ...require(path),
-    updateVersion (version) {
+    updateVersion(version) {
       const newContent = { ...JSON.parse(content), version }
       fs.writeFileSync(path, `${JSON.stringify(newContent, null, 2)}\n`)
     },
   }
 }
 
-async function main () {
+async function main() {
   const runIfNotDry = isDryRun ? dryRun : run
 
   /**
@@ -101,9 +101,7 @@ async function main () {
     type: 'select',
     name: 'release',
     message: 'Select release type',
-    choices: versionIncrements
-      .map(i => `${i} (${inc(i)})`)
-      .concat(['custom']),
+    choices: versionIncrements.map((i) => `${i} (${inc(i)})`).concat(['custom']),
   })
 
   let targetVersion
@@ -118,13 +116,11 @@ async function main () {
       initial: pkg.version,
     })
     targetVersion = res.version
-  }
-  else {
+  } else {
     targetVersion = release.match(/\((.*)\)/)[1]
   }
 
-  if (!semver.valid(targetVersion))
-    throw new Error(`invalid target version: ${targetVersion}`)
+  if (!semver.valid(targetVersion)) throw new Error(`invalid target version: ${targetVersion}`)
 
   const tag = `${name}@${targetVersion}`
 
@@ -137,17 +133,14 @@ async function main () {
     message: `Releasing ${tag}. Confirm?`,
   })
 
-  if (!yes)
-    return
+  if (!yes) return
 
   step(`\nUpdating ${pkg.type} version...`)
   pkg.updateVersion(targetVersion)
 
   step(`\nBuilding ${pkg.type}...`)
-  if (!skipBuild && !isDryRun)
-    run('pnpm', ['build'], { cwd: resolve('.') })
-  else
-    console.log('(skipped)')
+  if (!skipBuild && !isDryRun) run('pnpm', ['build'], { cwd: resolve('.') })
+  else console.log('(skipped)')
 
   step('\nGenerating changelog...')
   runIfNotDry('pnpm', ['changelog', name])
@@ -157,8 +150,7 @@ async function main () {
     step('\nCommitting changes...')
     runIfNotDry('git', ['add', '-A'])
     runIfNotDry('git', ['commit', '-m', `release: ${tag}`])
-  }
-  else {
+  } else {
     console.log('No changes to commit.')
   }
 
@@ -168,8 +160,7 @@ async function main () {
   step('\nPushing to GitHub...')
   runIfNotDry('git', ['push'])
 
-  if (isDryRun)
-    console.log(`\nDry run finished - run git diff to see ${pkg.type} changes.`)
+  if (isDryRun) console.log(`\nDry run finished - run git diff to see ${pkg.type} changes.`)
 
   console.log()
 }
@@ -178,19 +169,17 @@ async function main () {
  * @param {string} version
  * @param {Function} runIfNotDry
  */
-async function publishPackage (version, runIfNotDry) {
+async function publishPackage(version, runIfNotDry) {
   try {
     runIfNotDry('pnpm', ['publish'], {
       stdio: 'inherit',
       cwd: resolve('.'),
     })
     console.log(colors.green(`Successfully published ${name}@${version}`))
-  }
-  catch (e) {
+  } catch (e) {
     if (e.stderr.match(/previously published/))
       console.log(colors.red(`Skipping already published: ${name}`))
-    else
-      throw e
+    else throw e
   }
 }
 

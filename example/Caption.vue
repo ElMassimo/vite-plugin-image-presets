@@ -1,5 +1,5 @@
 <template>
-  <p class="caption"><slot/></p>
+  <p class="caption"><slot /></p>
 </template>
 
 <style scoped>

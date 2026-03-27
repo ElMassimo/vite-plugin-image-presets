@@ -17,19 +17,21 @@ import fullImage from '@images/vite-ruby.png?preset=full'
       </ExternalLink>
     </h1>
     <ExternalLink href="https://vite-ruby.netlify.app">
-      <img srcset="@images/vite-rails.png?preset=thumbnail&srcset" height="48"/>
+      <img srcset="@images/vite-rails.png?preset=thumbnail&srcset" height="48" />
       <Caption>Optimized based on screen density, single-format</Caption>
     </ExternalLink>
     <ExternalLink href="https://iles-docs.netlify.app">
-      <Image :src="roundImage"/>
+      <Image :src="roundImage" />
       <Caption>A custom transform squares the image and rounds its borders</Caption>
     </ExternalLink>
-    <ExternalLink href="https://jakearchibald.com/2021/serving-sharp-images-to-high-density-screens/">
-      <Image :src="pandaImage"/>
+    <ExternalLink
+      href="https://jakearchibald.com/2021/serving-sharp-images-to-high-density-screens/"
+    >
+      <Image :src="pandaImage" />
       <Caption>Optimized based on screen density and size, multi-format</Caption>
     </ExternalLink>
     <ExternalLink href="https://vite-ruby.netlify.app">
-      <Image :src="fullImage"/>
+      <Image :src="fullImage" />
       <Caption>No resizing, multi-format</Caption>
     </ExternalLink>
   </main>
@@ -42,7 +44,9 @@ import fullImage from '@images/vite-ruby.png?preset=full'
         </ExternalLink>
       </li>
       <li>
-        <ExternalLink href="https://jakearchibald.com/2021/serving-sharp-images-to-high-density-screens/">
+        <ExternalLink
+          href="https://jakearchibald.com/2021/serving-sharp-images-to-high-density-screens/"
+        >
           Halve the size of images by optimising for high density displays
         </ExternalLink>
       </li>

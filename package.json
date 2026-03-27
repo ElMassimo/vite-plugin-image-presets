@@ -37,11 +37,11 @@
     "lint": "vp lint",
     "test": "vp test",
     "test:e2e": "playwright test",
-    "dev": "vp pack --dts --watch",
+    "dev": "vp pack --watch",
     "example": "npm -C example run dev",
     "example:build": "npm -C example run build",
     "example:now": "npm -C example run now",
-    "build": "vp pack --dts",
+    "build": "vp pack",
     "release": "node scripts/release.cjs",
     "prepublishOnly": "npm run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
@@ -56,8 +56,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
-    "@types/debug": "^4.1.7",
-    "@types/node": "^22",
     "conventional-changelog-cli": "^2.2.2",
     "cross-spawn": "^7.0.3",
     "enquirer": "^2.3.6",
@@ -68,6 +66,11 @@
     "vite": "catalog:",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/node": "^22",
+    "vite": "catalog:"
   },
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
